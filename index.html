@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Jemima & Nazmul's Walima — Tap to Play</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game">
+
+  <div id="startScreen" class="screen">
+    <h1>💍 Run to the Walima!</h1>
+    <p>Dodge the barriers and make it to the hotel to unlock your invitation.</p>
+    <button id="startBtn" class="big-btn">Tap to Start</button>
+  </div>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="hud">
+    <div id="progressTrack"><div id="progressFill"></div></div>
+  </div>
+
+  <div id="controls">
+    <button id="jumpBtn" class="big-btn">JUMP</button>
+  </div>
+
+  <div id="overlay" class="screen hidden">
+    <div id="overlayContent"></div>
+    <button id="overlayBtn" class="big-btn">Continue</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
