@@ -71,6 +71,30 @@ document.addEventListener('click', (e) => {
   }, 1400);
 });
 
+// ===== Copy promo code (any page) =====
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-code-btn');
+  if (!btn) return;
+  const code = btn.dataset.code || '';
+  const originalText = btn.textContent;
+
+  const flashCopied = () => {
+    btn.classList.add('copied');
+    btn.textContent = 'Copied ✓';
+    showToast(`Code ${code} copied to clipboard`);
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = originalText;
+    }, 1500);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(flashCopied).catch(() => showToast(`Your code: ${code}`));
+  } else {
+    showToast(`Your code: ${code}`);
+  }
+});
+
 // ===== Mobile nav toggle =====
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
@@ -472,4 +496,91 @@ if (cartPageContent) {
   }
 
   renderCart();
+}
+
+// ===== Subscription plans (special-offers page only) =====
+const subscribeOverlay = document.getElementById('subscribeModalOverlay');
+if (subscribeOverlay) {
+  const subscribeClose = document.getElementById('subscribeModalClose');
+  const subscribeForm = document.getElementById('subscribeForm');
+  const subscribeTitle = document.getElementById('subscribeModalTitle');
+  const subscribeMeta = document.getElementById('subscribePlanMeta');
+  const subscribeFormView = document.getElementById('subscribeFormView');
+  const subscribeSuccessView = document.getElementById('subscribeSuccessView');
+  const subscribeSuccessName = document.getElementById('subscribeSuccessName');
+  const subscribeSuccessPlan = document.getElementById('subscribeSuccessPlan');
+  const SUBSCRIPTION_KEY = 'beanBoutiqueSubscription';
+
+  let activePlanId = null;
+  let activePlanName = '';
+
+  function getSubscription() {
+    try { return JSON.parse(localStorage.getItem(SUBSCRIPTION_KEY)); } catch (err) { return null; }
+  }
+  function saveSubscription(sub) {
+    try { localStorage.setItem(SUBSCRIPTION_KEY, JSON.stringify(sub)); } catch (err) { /* storage unavailable */ }
+  }
+
+  function refreshPlanButtons() {
+    const sub = getSubscription();
+    document.querySelectorAll('.plan-card[data-plan-id]').forEach((card) => {
+      const btn = card.querySelector('.choose-plan-btn');
+      if (!btn) return;
+      if (sub && sub.planId === card.dataset.planId) {
+        btn.textContent = 'Current Plan ✓';
+        btn.classList.add('current-plan');
+      } else {
+        btn.textContent = sub ? 'Switch to This Plan' : 'Choose This Plan';
+        btn.classList.remove('current-plan');
+      }
+    });
+  }
+
+  function openSubscribeModal(btn) {
+    const card = btn.closest('.plan-card');
+    if (!card) return;
+    activePlanId = card.dataset.planId;
+    activePlanName = card.dataset.planName;
+    subscribeTitle.textContent = `Subscribe: ${activePlanName}`;
+    subscribeMeta.textContent = card.dataset.planFrequency || '';
+    subscribeForm.reset();
+    subscribeFormView.classList.remove('hidden-card');
+    subscribeSuccessView.classList.add('hidden-card');
+    subscribeOverlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSubscribeModal() {
+    subscribeOverlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.choose-plan-btn');
+    if (btn && !btn.classList.contains('current-plan')) openSubscribeModal(btn);
+  });
+
+  subscribeClose.addEventListener('click', closeSubscribeModal);
+  subscribeOverlay.addEventListener('click', (e) => {
+    if (e.target === subscribeOverlay) closeSubscribeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && subscribeOverlay.classList.contains('visible')) closeSubscribeModal();
+  });
+
+  subscribeForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameInput = subscribeForm.querySelector('input[type="text"]');
+    subscribeSuccessName.textContent = nameInput && nameInput.value ? nameInput.value.split(' ')[0] : 'there';
+    subscribeSuccessPlan.textContent = activePlanName;
+    subscribeFormView.classList.add('hidden-card');
+    subscribeSuccessView.classList.remove('hidden-card');
+
+    saveSubscription({ planId: activePlanId, planName: activePlanName });
+    refreshPlanButtons();
+
+    setTimeout(closeSubscribeModal, 2600);
+  });
+
+  refreshPlanButtons();
 }
