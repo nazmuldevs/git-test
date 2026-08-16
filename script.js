@@ -225,6 +225,7 @@ if (modalOverlay) {
     modalOverlay.classList.remove('visible');
     document.body.style.overflow = '';
     try { localStorage.setItem(STORAGE_KEY, 'true'); } catch (err) { /* storage unavailable */ }
+    if (window.__maybeShowCookieBanner) window.__maybeShowCookieBanner();
   }
 
   try {
@@ -583,4 +584,68 @@ if (subscribeOverlay) {
   });
 
   refreshPlanButtons();
+}
+
+// ===== Interactive map pin (homepage only) =====
+const mapPin = document.getElementById('mapPin');
+const mapTooltip = document.getElementById('mapTooltip');
+if (mapPin && mapTooltip) {
+  mapPin.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = mapTooltip.classList.toggle('visible');
+    mapPin.setAttribute('aria-expanded', String(isVisible));
+  });
+  document.addEventListener('click', (e) => {
+    if (!mapPin.contains(e.target) && !mapTooltip.contains(e.target)) {
+      mapTooltip.classList.remove('visible');
+      mapPin.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      mapTooltip.classList.remove('visible');
+      mapPin.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+// ===== Cookie / privacy consent banner (every page) =====
+const cookieBanner = document.getElementById('cookieBanner');
+if (cookieBanner) {
+  const COOKIE_KEY = 'beanBoutiqueCookieChoice';
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieEssential = document.getElementById('cookieEssential');
+  const cookieDetailsToggle = document.getElementById('cookieDetailsToggle');
+  const cookieDetails = document.getElementById('cookieDetails');
+
+  function getCookieChoice() {
+    try { return localStorage.getItem(COOKIE_KEY); } catch (err) { return null; }
+  }
+  function setCookieChoice(value) {
+    try { localStorage.setItem(COOKIE_KEY, value); } catch (err) { /* storage unavailable */ }
+  }
+
+  // Don't compete with the welcome-discount modal for attention: if it's
+  // currently open, wait for it to close (via window.__maybeShowCookieBanner,
+  // called from the modal's closeModal) rather than showing both at once.
+  window.__maybeShowCookieBanner = () => {
+    if (getCookieChoice()) return;
+    const discountModal = document.getElementById('modalOverlay');
+    if (discountModal && discountModal.classList.contains('visible')) return;
+    cookieBanner.classList.add('visible');
+  };
+
+  setTimeout(() => window.__maybeShowCookieBanner(), 2200);
+
+  function dismissCookieBanner(choice) {
+    setCookieChoice(choice);
+    cookieBanner.classList.remove('visible');
+  }
+
+  cookieAccept.addEventListener('click', () => dismissCookieBanner('all'));
+  cookieEssential.addEventListener('click', () => dismissCookieBanner('essential'));
+  cookieDetailsToggle.addEventListener('click', () => {
+    const isVisible = cookieDetails.classList.toggle('visible');
+    cookieDetailsToggle.textContent = isVisible ? 'Hide details' : 'What do you store?';
+  });
 }

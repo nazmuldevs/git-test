@@ -315,6 +315,90 @@
     </div>
   </section>
 
+  <!-- ===== Social feed widget ===== -->
+  <section class="social-feed">
+    <div class="section-head">
+      <p class="eyebrow">From the Counter</p>
+      <h2>Follow Our Community</h2>
+    </div>
+    <div class="social-grid">
+      <a href="#" class="social-tile grad-1" aria-label="Instagram post: Morning pour-overs hit different">
+        ☕
+        <span class="social-tile-overlay"><span class="likes">♥ 142</span><span>Morning pour-overs hit different</span></span>
+      </a>
+      <a href="#" class="social-tile grad-2" aria-label="Instagram post: Fresh Ethiopian lot just landed">
+        🌱
+        <span class="social-tile-overlay"><span class="likes">♥ 98</span><span>Fresh Ethiopian lot just landed</span></span>
+      </a>
+      <a href="#" class="social-tile grad-3" aria-label="Instagram post: Latte art workshop recap">
+        🎨
+        <span class="social-tile-overlay"><span class="likes">♥ 213</span><span>Latte art workshop recap</span></span>
+      </a>
+      <a href="#" class="social-tile grad-4" aria-label="Instagram post: Midnight Reserve restocked">
+        🌙
+        <span class="social-tile-overlay"><span class="likes">♥ 87</span><span>Midnight Reserve restocked</span></span>
+      </a>
+      <a href="#" class="social-tile grad-5" aria-label="Instagram post: Live Acoustic Sunday vibes">
+        🎶
+        <span class="social-tile-overlay"><span class="likes">♥ 156</span><span>Live Acoustic Sunday vibes</span></span>
+      </a>
+      <a href="#" class="social-tile grad-6" aria-label="Instagram post: Cupping night regulars">
+        👥
+        <span class="social-tile-overlay"><span class="likes">♥ 204</span><span>Cupping night regulars</span></span>
+      </a>
+    </div>
+    <div class="social-cta">
+      <p>Tag <strong>@beanboutique</strong> in your cup shots to be featured.</p>
+      <a href="#" class="btn btn-outline">Follow on Instagram</a>
+    </div>
+  </section>
+
+  <!-- ===== Find us / interactive map widget ===== -->
+  <section class="find-us" id="find-us">
+    <div class="find-us-inner">
+      <div class="find-us-copy">
+        <p class="eyebrow">Find Us</p>
+        <h2>Come Say Hello</h2>
+        <p>Tucked into the Riverside District, five minutes from the metro — with a patio out back for slow mornings and every tasting, workshop and meet-the-roaster event we host.</p>
+        <ul class="find-us-details">
+          <li><strong>Address:</strong> 24 Roastery Lane, Riverside District</li>
+          <li><strong>Hours:</strong> Mon–Fri 7am–6pm · Sat–Sun 8am–5pm</li>
+        </ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=24+Roastery+Lane%2C+Riverside+District" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get Directions</a>
+      </div>
+      <div class="find-us-map">
+        <svg viewBox="0 0 400 320" class="map-svg" aria-hidden="true">
+          <rect width="400" height="320" fill="#eee0c4"/>
+          <rect x="20" y="20" width="110" height="90" rx="10" fill="#cbdba8"/>
+          <text x="30" y="45" font-family="Georgia, serif" font-size="12" fill="#5c7c40">Riverside Park</text>
+          <path d="M0 140 H400" stroke="#f5ead2" stroke-width="22"/>
+          <path d="M0 140 H400" stroke="#d8c79f" stroke-width="2" stroke-dasharray="6 6"/>
+          <path d="M180 0 V320" stroke="#f5ead2" stroke-width="18"/>
+          <path d="M180 0 V320" stroke="#d8c79f" stroke-width="2" stroke-dasharray="6 6"/>
+          <path d="M300 0 V320" stroke="#f5ead2" stroke-width="14"/>
+          <text x="145" y="130" font-family="Georgia, serif" font-size="12" fill="#8a7a5c">Roastery Lane</text>
+          <rect x="220" y="20" width="50" height="90" rx="6" fill="#e3d3b0"/>
+          <rect x="290" y="30" width="70" height="80" rx="6" fill="#e3d3b0"/>
+          <rect x="220" y="170" width="60" height="120" rx="6" fill="#e3d3b0"/>
+          <rect x="20" y="170" width="130" height="120" rx="6" fill="#e3d3b0"/>
+          <rect x="300" y="170" width="80" height="120" rx="6" fill="#e3d3b0"/>
+        </svg>
+        <button type="button" class="map-pin" id="mapPin" style="left: 53%; top: 44%;" aria-expanded="false" aria-controls="mapTooltip" aria-label="Show Bean Boutique location details">
+          <span class="map-pin-pulse" aria-hidden="true"></span>
+          <svg viewBox="0 0 24 32" width="30" height="38" aria-hidden="true">
+            <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12Z" fill="currentColor"/>
+            <circle cx="12" cy="12" r="5" fill="#fff8f0"/>
+          </svg>
+        </button>
+        <div class="map-tooltip" id="mapTooltip" style="left: 53%; top: 44%;">
+          <strong>Bean Boutique</strong>
+          <p>24 Roastery Lane<br>Open today until 6pm</p>
+          <p class="map-tooltip-note">📍 Also where all our events &amp; tastings happen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Newsletter ===== -->
   <section id="newsletter" class="newsletter">
     <h2>Join the Bean Boutique Club</h2>
@@ -401,6 +485,28 @@
       <button type="submit" class="btn btn-primary btn-block">Get My Discount</button>
     </form>
     <button class="modal-dismiss" id="modalDismiss">No thanks, maybe later</button>
+  </div>
+</div>
+
+<!-- ===== Cookie / privacy consent banner ===== -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie and privacy preferences">
+  <div class="cookie-banner-head">
+    <span class="cookie-banner-icon" aria-hidden="true">🍪</span>
+    <p>We use your browser's local storage to remember your cart, subscription plan and preferences — nothing is sent to a server or shared with anyone.</p>
+  </div>
+  <div class="cookie-banner-details" id="cookieDetails">
+    <p>What we store on this device:</p>
+    <ul>
+      <li>🛒 Cart items and quantities</li>
+      <li>☕ Subscription plan, if you've started one</li>
+      <li>🎟️ Events you've registered for</li>
+      <li>🎁 Whether you've seen the welcome discount</li>
+    </ul>
+  </div>
+  <div class="cookie-banner-actions">
+    <button type="button" class="btn btn-primary btn-small" id="cookieAccept">Accept All</button>
+    <button type="button" class="btn-cookie-outline" id="cookieEssential">Essential Only</button>
+    <button type="button" class="cookie-banner-link" id="cookieDetailsToggle">What do you store?</button>
   </div>
 </div>
 
