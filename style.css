@@ -10,6 +10,13 @@
   --cream-dark: #f3e5d3;
   --accent: #d98c3d;
   --accent-dark: #b76a2b;
+  /* --accent passes contrast fine as text/icon color on dark surfaces and
+     as a border/decorative colour, but at 2.57:1 it fails WCAG AA (4.5:1)
+     for light text set ON TOP of it. --accent-btn is a darker shade used
+     specifically for that direction (buttons, tag pills) so it stays
+     accessible without touching --accent's other, already-compliant uses. */
+  --accent-btn: #9c5a1c;
+  --accent-btn-hover: #8a4f18;
   --text: #3b2418;
   --text-soft: #6b5849;
   --radius: 16px;
@@ -76,8 +83,8 @@ section { padding: 88px 24px; }
   border: 2px solid transparent;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
-.btn-primary { background: var(--accent); color: var(--cream); box-shadow: 0 6px 18px rgba(217, 140, 61, 0.4); }
-.btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(217, 140, 61, 0.45); }
+.btn-primary { background: var(--accent-btn); color: var(--cream); box-shadow: 0 6px 18px rgba(217, 140, 61, 0.4); }
+.btn-primary:hover { background: var(--accent-btn-hover); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(217, 140, 61, 0.45); }
 .btn-ghost { border-color: var(--coffee-dark); color: var(--coffee-dark); }
 .btn-ghost:hover { background: var(--coffee-dark); color: var(--cream); transform: translateY(-2px); }
 .btn-outline { border-color: currentColor; padding: 8px 18px; }
@@ -288,9 +295,9 @@ section { padding: 88px 24px; }
 .grad-4 { background: linear-gradient(135deg, #5c4433, #2b1810); }
 .grad-5 { background: linear-gradient(135deg, #c9a97a, #8a6a48); font-size: 3rem; }
 .grad-6 { background: linear-gradient(135deg, #7c9cae, #4c6b7d); font-size: 3rem; }
-.slide-body .tag {
+.tag {
   display: inline-block;
-  background: var(--accent);
+  background: var(--accent-btn);
   color: var(--cream);
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -298,8 +305,8 @@ section { padding: 88px 24px; }
   font-weight: 700;
   padding: 4px 12px;
   border-radius: 999px;
-  margin-bottom: 12px;
 }
+.slide-body .tag { margin-bottom: 12px; }
 .slide-body h3 { color: var(--cream); font-size: 1.6rem; margin-bottom: 8px; }
 .slide-body p { color: #e6d5c3; max-width: 480px; }
 
@@ -843,7 +850,7 @@ section { padding: 88px 24px; }
   color: var(--cream);
   font: inherit;
 }
-.modal select:focus { outline: none; border-color: var(--accent); }
+.modal select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(217, 140, 61, 0.25); }
 .modal select option { color: var(--text); }
 
 /* ===== Equipment catalogue ===== */
@@ -1260,7 +1267,7 @@ section { padding: 88px 24px; }
   background: var(--cream);
   font: inherit;
 }
-.newsletter-form input:focus { outline: none; border-color: var(--accent); }
+.newsletter-form input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(217, 140, 61, 0.15); }
 .form-note { margin-top: 14px; font-size: 0.9rem; color: var(--accent-dark); font-weight: 600; min-height: 1.2em; }
 
 /* ===== Footer ===== */
@@ -1345,7 +1352,7 @@ section { padding: 88px 24px; }
   align-items: center;
   justify-content: center;
 }
-.modal-tag { background: var(--accent); margin-bottom: 10px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.modal-tag { margin-bottom: 10px; }
 .modal h3 { color: var(--cream); font-size: 1.5rem; margin-bottom: 12px; }
 .modal p { color: #e6d5c3; font-size: 0.95rem; margin-bottom: 24px; }
 .modal form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
@@ -1360,7 +1367,7 @@ section { padding: 88px 24px; }
   font: inherit;
 }
 .modal input::placeholder { color: #c9b39a; }
-.modal input:focus { outline: none; border-color: var(--accent); }
+.modal input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(217, 140, 61, 0.25); }
 .modal-dismiss {
   background: none;
   border: none;
