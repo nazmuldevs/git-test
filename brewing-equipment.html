@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Shop Bean Boutique's brewing equipment — espresso machines, French presses, pour-over gear, grinders and more — with detailed descriptions and usage tips.">
+<title>Brewing Equipment — Bean Boutique</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="30" height="30">
+          <path d="M10 20h24a2 2 0 0 1 2 2c0 8-5 16-14 16S8 30 8 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M34 22h3a4 4 0 0 1 0 8h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 9c-2 2-2 4 0 6M24 8c-2 2-2 4 0 6M32 9c-2 2-2 4 0 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      Bean&nbsp;Boutique
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">Our Story</a>
+      <a href="coffee-selection.html">Coffee Selection</a>
+      <a href="brewing-equipment.html" class="active">Brewing Equipment</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#contact">Visit Us</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="index.html#newsletter" class="btn btn-small btn-outline">Join the Club</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== Page header ===== -->
+  <section class="page-header">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Brewing Equipment</p>
+    <h1>Brewing Equipment</h1>
+    <p class="page-header-lede">From first-apartment French presses to full espresso setups — every machine and brewer we sell behind our own counter, with the tips we give customers at checkout.</p>
+  </section>
+
+  <!-- ===== Catalogue ===== -->
+  <section class="catalogue">
+    <div class="filter-tabs" role="tablist" aria-label="Filter brewing equipment">
+      <button class="filter-tab active" data-filter="all">All Equipment</button>
+      <button class="filter-tab" data-filter="machine">Machines</button>
+      <button class="filter-tab" data-filter="manual">Manual Brewers</button>
+      <button class="filter-tab" data-filter="accessory">Grinders &amp; Accessories</button>
+    </div>
+
+    <div class="coffee-grid">
+
+      <article class="coffee-card" data-category="machine">
+        <div class="coffee-card-top">
+          <h3>Semi-Automatic Espresso Machine</h3>
+          <span class="category-badge machine">Machine</span>
+        </div>
+        <p class="equipment-tagline">Best for: espresso, lattes &amp; cappuccinos at home</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Advanced</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 85%;"></span></div>
+        </div>
+        <p class="coffee-desc">A 15-bar pump with a built-in steam wand for pulling café-quality shots and texturing milk. Manual dosing and tamping give you full control once you've learned the machine.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Preheat the portafilter and cup before pulling a shot</li>
+            <li>Dose 18g and aim for a 25–30 second extraction</li>
+            <li>Purge and wipe the steam wand after every use</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$450</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="machine">
+        <div class="coffee-card-top">
+          <h3>Moka Pot (Stovetop Espresso Maker)</h3>
+          <span class="category-badge machine">Machine</span>
+        </div>
+        <p class="equipment-tagline">Best for: strong, espresso-style coffee without the machine</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Intermediate</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 50%;"></span></div>
+        </div>
+        <p class="coffee-desc">Aluminium stovetop brewer that pushes steam pressure through the grounds for a bold, concentrated cup. A classic that lasts decades with basic care.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Fill the boiler chamber to just below the safety valve</li>
+            <li>Don't tamp the grounds — level them gently instead</li>
+            <li>Brew on low heat and remove as soon as it gurgles</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$34</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="manual">
+        <div class="coffee-card-top">
+          <h3>Ceramic Pour-Over Dripper</h3>
+          <span class="category-badge manual">Manual Brewer</span>
+        </div>
+        <p class="equipment-tagline">Best for: clean, bright single cups</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 15%;"></span></div>
+        </div>
+        <p class="coffee-desc">A cone-shaped dripper that lets you control every part of the pour. Highlights the delicate, floral notes in light-roast and single-origin coffees.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Rinse the paper filter with hot water before brewing</li>
+            <li>Bloom the grounds with a small pour for 30 seconds first</li>
+            <li>Pour in slow circles, keeping the water level steady</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$28</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="manual">
+        <div class="coffee-card-top">
+          <h3>French Press</h3>
+          <span class="category-badge manual">Manual Brewer</span>
+        </div>
+        <p class="equipment-tagline">Best for: full-bodied, rich coffee</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 15%;"></span></div>
+        </div>
+        <p class="coffee-desc">Immersion brewing with a mesh plunger for a heavier body and more oils in the cup. Forgiving to brew and easy to clean — a great first brewer.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Use a coarse grind so grounds don't slip past the filter</li>
+            <li>Steep for 4 minutes before pressing</li>
+            <li>Press slowly and pour off right away to avoid over-extraction</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$32</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="manual">
+        <div class="coffee-card-top">
+          <h3>AeroPress</h3>
+          <span class="category-badge manual">Manual Brewer</span>
+        </div>
+        <p class="equipment-tagline">Best for: travel and fast, smooth cups</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 20%;"></span></div>
+        </div>
+        <p class="coffee-desc">A lightweight, nearly indestructible brewer that uses gentle pressure for a smooth, low-acid cup in under two minutes. Packs flat for travel.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Use a medium-fine grind, similar to table salt</li>
+            <li>Try the inverted method for a fuller-bodied cup</li>
+            <li>Steep 1–2 minutes, then press steadily over 30 seconds</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$30</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="manual">
+        <div class="coffee-card-top">
+          <h3>Chemex</h3>
+          <span class="category-badge manual">Manual Brewer</span>
+        </div>
+        <p class="equipment-tagline">Best for: tea-like clarity and entertaining</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Intermediate</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 55%;"></span></div>
+        </div>
+        <p class="coffee-desc">An hourglass carafe with thick, proprietary filters that produce an exceptionally clean, sediment-free cup. Doubles as a table centrepiece.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Only use genuine Chemex filters — they're thicker than standard cones</li>
+            <li>Grind medium-coarse to match the slower flow rate</li>
+            <li>Bloom for 30 seconds, then pour in three or four stages</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$45</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="manual">
+        <div class="coffee-card-top">
+          <h3>Cold Brew Maker</h3>
+          <span class="category-badge manual">Manual Brewer</span>
+        </div>
+        <p class="equipment-tagline">Best for: smooth, low-acid iced coffee</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 15%;"></span></div>
+        </div>
+        <p class="coffee-desc">A carafe with a removable steeping filter — no heat required. Long, slow extraction pulls sweetness forward while leaving bitterness behind.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Use a coarse grind to keep the steeped coffee from turning muddy</li>
+            <li>Steep in the fridge for 12–18 hours</li>
+            <li>Dilute the concentrate 1:1 with water or milk over ice</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$38</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="accessory">
+        <div class="coffee-card-top">
+          <h3>Ceramic Hand Grinder</h3>
+          <span class="category-badge accessory">Accessory</span>
+        </div>
+        <p class="equipment-tagline">Best for: quiet mornings and travel</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 20%;"></span></div>
+        </div>
+        <p class="coffee-desc">A compact hand-crank grinder with ceramic burrs for a consistent grind, no outlet or cord required. Adjustable for everything from espresso to French press.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Adjust the burr collar to match your brew method</li>
+            <li>Grind just before brewing for the freshest cup</li>
+            <li>Brush out leftover grounds weekly to prevent staleness</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$45</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="accessory">
+        <div class="coffee-card-top">
+          <h3>Electric Burr Grinder</h3>
+          <span class="category-badge accessory">Accessory</span>
+        </div>
+        <p class="equipment-tagline">Best for: households brewing daily</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 25%;"></span></div>
+        </div>
+        <p class="coffee-desc">A stepped-dial burr grinder that stores your favourite settings for pour-over, drip and espresso, so every brewer in the house gets the right grind fast.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Start at the middle setting and adjust to taste</li>
+            <li>Keep the hopper away from heat and moisture</li>
+            <li>Empty the hopper if beans will sit for more than a week</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$120</span>
+        </div>
+      </article>
+
+      <article class="coffee-card" data-category="accessory">
+        <div class="coffee-card-top">
+          <h3>Digital Scale with Timer</h3>
+          <span class="category-badge accessory">Accessory</span>
+        </div>
+        <p class="equipment-tagline">Best for: dialing in a consistent brew</p>
+        <div class="skill-meter">
+          <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
+          <div class="skill-bar"><span class="skill-bar-marker" style="left: 20%;"></span></div>
+        </div>
+        <p class="coffee-desc">A slim scale with a built-in timer for measuring coffee-to-water ratio down to the gram — the fastest upgrade to a noticeably better cup.</p>
+        <div class="usage-tips">
+          <p class="coffee-subhead">Usage Tips</p>
+          <ul>
+            <li>Tare the scale before every pour</li>
+            <li>Use a 1:16 coffee-to-water ratio as a pour-over starting point</li>
+            <li>Track your times to repeat a cup you loved</li>
+          </ul>
+        </div>
+        <div class="coffee-card-footer">
+          <span class="price">$25</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== Newsletter ===== -->
+  <section id="newsletter" class="newsletter">
+    <h2>Join the Bean Boutique Club</h2>
+    <p>First dibs on new blends, event invites, and a little something for your first order.</p>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" required placeholder="you@example.com" aria-label="Email address">
+      <button type="submit" class="btn btn-primary">Sign Me Up</button>
+    </form>
+    <p class="form-note" id="newsletterNote" role="status"></p>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer id="contact" class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="26" height="26">
+            <path d="M10 20h24a2 2 0 0 1 2 2c0 8-5 16-14 16S8 30 8 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M34 22h3a4 4 0 0 1 0 8h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Bean&nbsp;Boutique
+      </a>
+      <p>Small-batch coffee and brewing gear, roasted with the neighbourhood in mind.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v6H14v-6h2.5l.5-3H14V9.8c0-.5.3-.8.8-.8Z" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html#about">Our Story</a>
+      <a href="coffee-selection.html">Coffee Selection</a>
+      <a href="brewing-equipment.html">Brewing Equipment</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#newsletter">Join the Club</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <p>24 Roastery Lane<br>Riverside District</p>
+      <p>Mon–Fri: 7am – 6pm<br>Sat–Sun: 8am – 5pm</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Get in Touch</h4>
+      <p><a href="mailto:hello@beanboutique.example">hello@beanboutique.example</a></p>
+      <p><a href="tel:+10000000000">(000) 000-0000</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Bean Boutique. Made with warmth, one cup at a time.</p>
+  </div>
+</footer>
+
+<!-- ===== First-visit discount modal ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close popup">&times;</button>
+    <div class="modal-visual" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="64" height="64">
+        <path d="M20 40h50a4 4 0 0 1 4 4c0 15-10 30-29 30S16 59 16 44a4 4 0 0 1 4-4Z" fill="#fff8f0"/>
+        <path d="M70 44h8a10 10 0 0 1 0 20h-6" fill="none" stroke="#fff8f0" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="tag modal-tag">Welcome!</span>
+    <h3 id="modalTitle">Take 15% off your first order</h3>
+    <p>Sign up for the Bean Boutique newsletter and we'll send your discount code straight away — plus first word on new blends and events.</p>
+    <form id="modalForm">
+      <input type="email" required placeholder="you@example.com" aria-label="Email address">
+      <button type="submit" class="btn btn-primary btn-block">Get My Discount</button>
+    </form>
+    <button class="modal-dismiss" id="modalDismiss">No thanks, maybe later</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
