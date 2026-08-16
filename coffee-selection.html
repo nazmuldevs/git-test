@@ -34,6 +34,10 @@
 
     <div class="nav-actions">
       <a href="index.html#newsletter" class="btn btn-small btn-outline">Join the Club</a>
+      <a href="cart.html" class="cart-link" aria-label="View shopping cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="currentColor"/><circle cx="18" cy="21" r="1.5" fill="currentColor"/></svg>
+        <span class="cart-count hidden-badge" id="cartCount">0</span>
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
@@ -60,7 +64,7 @@
 
     <div class="coffee-grid">
 
-      <article class="coffee-card" data-category="blend">
+      <article class="coffee-card" data-category="blend" data-cart-id="house-blend" data-cart-name="House Blend" data-cart-price="16" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>House Blend</h3>
           <span class="category-badge blend">Blend</span>
@@ -81,10 +85,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$16 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="blend">
+      <article class="coffee-card" data-category="blend" data-cart-id="sunrise-espresso-blend" data-cart-name="Sunrise Espresso Blend" data-cart-price="18" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Sunrise Espresso Blend</h3>
           <span class="category-badge blend">Blend</span>
@@ -105,10 +110,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$18 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="blend">
+      <article class="coffee-card" data-category="blend" data-cart-id="midnight-reserve" data-cart-name="Midnight Reserve" data-cart-price="18" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Midnight Reserve</h3>
           <span class="category-badge blend">Blend</span>
@@ -129,10 +135,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$18 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="blend">
+      <article class="coffee-card" data-category="blend" data-cart-id="decaf-delight" data-cart-name="Decaf Delight" data-cart-price="17" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Decaf Delight</h3>
           <span class="category-badge blend">Blend</span>
@@ -153,10 +160,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$17 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="single-origin">
+      <article class="coffee-card" data-category="single-origin" data-cart-id="ethiopian-yirgacheffe" data-cart-name="Ethiopian Yirgacheffe" data-cart-price="19" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Ethiopian Yirgacheffe</h3>
           <span class="category-badge single-origin">Single-Origin</span>
@@ -177,10 +185,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$19 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="single-origin">
+      <article class="coffee-card" data-category="single-origin" data-cart-id="sumatra-mandheling" data-cart-name="Sumatra Mandheling" data-cart-price="18" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Sumatra Mandheling</h3>
           <span class="category-badge single-origin">Single-Origin</span>
@@ -201,10 +210,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$18 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="single-origin">
+      <article class="coffee-card" data-category="single-origin" data-cart-id="colombian-supremo" data-cart-name="Colombian Supremo" data-cart-price="17" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Colombian Supremo</h3>
           <span class="category-badge single-origin">Single-Origin</span>
@@ -225,10 +235,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$17 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="single-origin">
+      <article class="coffee-card" data-category="single-origin" data-cart-id="kenyan-aa" data-cart-name="Kenyan AA" data-cart-price="20" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Kenyan AA</h3>
           <span class="category-badge single-origin">Single-Origin</span>
@@ -249,10 +260,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$20 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="single-origin">
+      <article class="coffee-card" data-category="single-origin" data-cart-id="guatemalan-antigua" data-cart-name="Guatemalan Antigua" data-cart-price="18" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Guatemalan Antigua</h3>
           <span class="category-badge single-origin">Single-Origin</span>
@@ -273,10 +285,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$18 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="single-origin">
+      <article class="coffee-card" data-category="single-origin" data-cart-id="costa-rican-tarraz" data-cart-name="Costa Rican Tarrazú" data-cart-price="19" data-cart-category="coffee">
         <div class="coffee-card-top">
           <h3>Costa Rican Tarrazú</h3>
           <span class="category-badge single-origin">Single-Origin</span>
@@ -297,6 +310,7 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$19 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
@@ -349,6 +363,7 @@
       <a href="coffee-selection.html">Coffee Selection</a>
       <a href="brewing-equipment.html">Brewing Equipment</a>
       <a href="events.html">Events</a>
+      <a href="cart.html">Cart</a>
       <a href="index.html#newsletter">Join the Club</a>
     </div>
 

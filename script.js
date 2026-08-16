@@ -2,6 +2,75 @@
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// ===== Shopping cart (shared across every page) =====
+const CART_KEY = 'beanBoutiqueCart';
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (err) { return []; }
+}
+
+function saveCart(cart) {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (err) { /* storage unavailable */ }
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const count = getCart().reduce((sum, item) => sum + item.qty, 0);
+  document.querySelectorAll('.cart-count').forEach((badge) => {
+    badge.textContent = String(count);
+    badge.classList.toggle('hidden-badge', count === 0);
+  });
+}
+
+function addToCart(product) {
+  const cart = getCart();
+  const existing = cart.find((item) => item.id === product.id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: product.id, name: product.name, price: product.price, category: product.category, qty: 1 });
+  }
+  saveCart(cart);
+}
+
+let cartToastTimer = null;
+function showToast(message) {
+  let toast = document.getElementById('cartToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cartToast';
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('visible');
+  clearTimeout(cartToastTimer);
+  cartToastTimer = setTimeout(() => toast.classList.remove('visible'), 2000);
+}
+
+updateCartBadge();
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.add-to-cart-btn');
+  if (!btn) return;
+  const source = btn.dataset.cartId ? btn : btn.closest('[data-cart-id]');
+  if (!source) return;
+  addToCart({
+    id: source.dataset.cartId,
+    name: source.dataset.cartName,
+    price: parseFloat(source.dataset.cartPrice) || 0,
+    category: source.dataset.cartCategory || 'coffee',
+  });
+  showToast(`Added ${source.dataset.cartName} to cart`);
+  btn.classList.add('added');
+  const originalText = btn.textContent;
+  btn.textContent = 'Added ✓';
+  setTimeout(() => {
+    btn.classList.remove('added');
+    btn.textContent = originalText;
+  }, 1400);
+});
+
 // ===== Mobile nav toggle =====
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
@@ -263,4 +332,144 @@ if (registerOverlay) {
 
     setTimeout(closeRegisterModal, 2400);
   });
+}
+
+// ===== Cart page (cart.html only) =====
+const cartPageContent = document.getElementById('cartPageContent');
+if (cartPageContent) {
+  const CATEGORY_ICON = { coffee: '☕', equipment: '🫖' };
+  const CATEGORY_LABEL = { coffee: 'Coffee', equipment: 'Equipment' };
+
+  function cartSubtotal(cart) {
+    return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  }
+
+  function renderCart() {
+    const cart = getCart();
+
+    if (cart.length === 0) {
+      cartPageContent.innerHTML = `
+        <div class="cart-empty">
+          <svg viewBox="0 0 24 24" width="56" height="56" aria-hidden="true"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="currentColor"/><circle cx="18" cy="21" r="1.5" fill="currentColor"/></svg>
+          <h2>Your cart is empty</h2>
+          <p>Add a favourite blend or a piece of brewing gear and it'll show up here.</p>
+          <div class="cart-empty-links">
+            <a href="coffee-selection.html" class="btn btn-primary">Browse Coffee</a>
+            <a href="brewing-equipment.html" class="btn btn-ghost">Browse Equipment</a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    const itemsHTML = cart.map((item) => `
+      <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item-thumb" aria-hidden="true">${CATEGORY_ICON[item.category] || '🛍️'}</div>
+        <div class="cart-item-info">
+          <h3>${item.name}</h3>
+          <span class="cart-item-category">${CATEGORY_LABEL[item.category] || 'Item'}</span>
+        </div>
+        <div class="cart-item-qty">
+          <button type="button" class="qty-btn" data-action="decrease" aria-label="Decrease quantity of ${item.name}">−</button>
+          <span class="qty-value">${item.qty}</span>
+          <button type="button" class="qty-btn" data-action="increase" aria-label="Increase quantity of ${item.name}">+</button>
+        </div>
+        <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+        <button type="button" class="cart-item-remove" aria-label="Remove ${item.name} from cart">&times;</button>
+      </div>
+    `).join('');
+
+    const subtotal = cartSubtotal(cart);
+    const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+
+    cartPageContent.innerHTML = `
+      <div class="cart-items">${itemsHTML}</div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="cart-summary-row"><span>Items (${itemCount})</span><span>$${subtotal.toFixed(2)}</span></div>
+        <div class="cart-summary-row"><span>Pickup</span><span>Free</span></div>
+        <div class="cart-summary-total"><span>Total</span><span>$${subtotal.toFixed(2)}</span></div>
+        <button type="button" class="btn btn-primary" id="checkoutBtn">Proceed to Checkout</button>
+        <p class="cart-summary-note">Online payment isn't live yet — we'll email you to arrange pickup &amp; payment.</p>
+      </div>
+    `;
+  }
+
+  function changeQty(id, delta) {
+    const cart = getCart();
+    const item = cart.find((i) => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    const nextCart = item.qty <= 0 ? cart.filter((i) => i.id !== id) : cart;
+    saveCart(nextCart);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    saveCart(getCart().filter((i) => i.id !== id));
+    renderCart();
+  }
+
+  cartPageContent.addEventListener('click', (e) => {
+    const itemEl = e.target.closest('.cart-item');
+    if (itemEl) {
+      const id = itemEl.dataset.id;
+      if (e.target.closest('[data-action="increase"]')) changeQty(id, 1);
+      else if (e.target.closest('[data-action="decrease"]')) changeQty(id, -1);
+      else if (e.target.closest('.cart-item-remove')) removeItem(id);
+      return;
+    }
+    if (e.target.closest('#checkoutBtn')) openCheckoutModal();
+  });
+
+  // ----- Checkout modal -----
+  const checkoutOverlay = document.getElementById('checkoutModalOverlay');
+  const checkoutClose = document.getElementById('checkoutModalClose');
+  const checkoutForm = document.getElementById('checkoutForm');
+  const checkoutSummaryText = document.getElementById('checkoutSummaryText');
+  const checkoutFormView = document.getElementById('checkoutFormView');
+  const checkoutSuccessView = document.getElementById('checkoutSuccessView');
+  const checkoutSuccessName = document.getElementById('checkoutSuccessName');
+
+  function openCheckoutModal() {
+    if (!checkoutOverlay) return;
+    const cart = getCart();
+    if (cart.length === 0) return;
+    const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+    checkoutSummaryText.textContent = `${itemCount} item${itemCount === 1 ? '' : 's'} · $${cartSubtotal(cart).toFixed(2)} total`;
+    checkoutForm.reset();
+    checkoutFormView.classList.remove('hidden-card');
+    checkoutSuccessView.classList.add('hidden-card');
+    checkoutOverlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCheckoutModal() {
+    if (!checkoutOverlay) return;
+    checkoutOverlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  if (checkoutOverlay) {
+    checkoutClose.addEventListener('click', closeCheckoutModal);
+    checkoutOverlay.addEventListener('click', (e) => {
+      if (e.target === checkoutOverlay) closeCheckoutModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && checkoutOverlay.classList.contains('visible')) closeCheckoutModal();
+    });
+
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameInput = checkoutForm.querySelector('input[type="text"]');
+      checkoutSuccessName.textContent = nameInput && nameInput.value ? nameInput.value.split(' ')[0] : 'there';
+      checkoutFormView.classList.add('hidden-card');
+      checkoutSuccessView.classList.remove('hidden-card');
+      saveCart([]);
+      renderCart();
+      setTimeout(closeCheckoutModal, 2600);
+    });
+  }
+
+  renderCart();
 }

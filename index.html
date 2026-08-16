@@ -35,6 +35,10 @@
 
     <div class="nav-actions">
       <a href="#newsletter" class="btn btn-small btn-outline">Join the Club</a>
+      <a href="cart.html" class="cart-link" aria-label="View shopping cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="currentColor"/><circle cx="18" cy="21" r="1.5" fill="currentColor"/></svg>
+        <span class="cart-count hidden-badge" id="cartCount">0</span>
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
@@ -222,13 +226,19 @@
         <div class="product-thumb grad-1" aria-hidden="true">☕</div>
         <h3>House Blend</h3>
         <p>Balanced, nutty and smooth — our everyday classic.</p>
-        <span class="price">$16 / 340g</span>
+        <div class="product-card-footer">
+          <span class="price">$16 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn" data-cart-id="house-blend" data-cart-name="House Blend" data-cart-price="16" data-cart-category="coffee">Add to Cart</button>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-thumb grad-2" aria-hidden="true">🌱</div>
         <h3>Ethiopian Yirgacheffe</h3>
         <p>Light roast, floral aroma, notes of bergamot and peach.</p>
-        <span class="price">$19 / 340g</span>
+        <div class="product-card-footer">
+          <span class="price">$19 / 340g</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn" data-cart-id="ethiopian-yirgacheffe" data-cart-name="Ethiopian Yirgacheffe" data-cart-price="19" data-cart-category="coffee">Add to Cart</button>
+        </div>
       </div>
       <div class="product-card product-card-cta">
         <div class="product-thumb grad-3" aria-hidden="true">➕</div>
@@ -240,13 +250,19 @@
         <div class="product-thumb grad-5" aria-hidden="true">🫖</div>
         <h3>Pour-Over Dripper</h3>
         <p>Ceramic dripper for a clean, bright cup every time.</p>
-        <span class="price">$28</span>
+        <div class="product-card-footer">
+          <span class="price">$28</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn" data-cart-id="ceramic-pour-over-dripper" data-cart-name="Ceramic Pour-Over Dripper" data-cart-price="28" data-cart-category="equipment">Add to Cart</button>
+        </div>
       </div>
       <div class="product-card">
         <div class="product-thumb grad-6" aria-hidden="true">⚙️</div>
         <h3>Hand Grinder</h3>
         <p>Consistent grind, quiet mornings, no cord required.</p>
-        <span class="price">$45</span>
+        <div class="product-card-footer">
+          <span class="price">$45</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn" data-cart-id="ceramic-hand-grinder" data-cart-name="Ceramic Hand Grinder" data-cart-price="45" data-cart-category="equipment">Add to Cart</button>
+        </div>
       </div>
       <div class="product-card product-card-cta">
         <div class="product-thumb grad-4" aria-hidden="true">➕</div>
@@ -344,6 +360,7 @@
       <a href="coffee-selection.html">Coffee Selection</a>
       <a href="brewing-equipment.html">Brewing Equipment</a>
       <a href="events.html">Events</a>
+      <a href="cart.html">Cart</a>
       <a href="index.html#newsletter">Join the Club</a>
     </div>
 

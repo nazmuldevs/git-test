@@ -34,6 +34,10 @@
 
     <div class="nav-actions">
       <a href="index.html#newsletter" class="btn btn-small btn-outline">Join the Club</a>
+      <a href="cart.html" class="cart-link" aria-label="View shopping cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="currentColor"/><circle cx="18" cy="21" r="1.5" fill="currentColor"/></svg>
+        <span class="cart-count hidden-badge" id="cartCount">0</span>
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
@@ -61,7 +65,7 @@
 
     <div class="coffee-grid">
 
-      <article class="coffee-card" data-category="machine">
+      <article class="coffee-card" data-category="machine" data-cart-id="semi-automatic-espresso-machine" data-cart-name="Semi-Automatic Espresso Machine" data-cart-price="450" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Semi-Automatic Espresso Machine</h3>
           <span class="category-badge machine">Machine</span>
@@ -82,10 +86,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$450</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="machine">
+      <article class="coffee-card" data-category="machine" data-cart-id="moka-pot-stovetop-espresso-maker" data-cart-name="Moka Pot (Stovetop Espresso Maker)" data-cart-price="34" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Moka Pot (Stovetop Espresso Maker)</h3>
           <span class="category-badge machine">Machine</span>
@@ -106,10 +111,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$34</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="manual">
+      <article class="coffee-card" data-category="manual" data-cart-id="ceramic-pour-over-dripper" data-cart-name="Ceramic Pour-Over Dripper" data-cart-price="28" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Ceramic Pour-Over Dripper</h3>
           <span class="category-badge manual">Manual Brewer</span>
@@ -130,10 +136,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$28</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="manual">
+      <article class="coffee-card" data-category="manual" data-cart-id="french-press" data-cart-name="French Press" data-cart-price="32" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>French Press</h3>
           <span class="category-badge manual">Manual Brewer</span>
@@ -154,10 +161,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$32</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="manual">
+      <article class="coffee-card" data-category="manual" data-cart-id="aeropress" data-cart-name="AeroPress" data-cart-price="30" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>AeroPress</h3>
           <span class="category-badge manual">Manual Brewer</span>
@@ -178,10 +186,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$30</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="manual">
+      <article class="coffee-card" data-category="manual" data-cart-id="chemex" data-cart-name="Chemex" data-cart-price="45" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Chemex</h3>
           <span class="category-badge manual">Manual Brewer</span>
@@ -202,10 +211,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$45</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="manual">
+      <article class="coffee-card" data-category="manual" data-cart-id="cold-brew-maker" data-cart-name="Cold Brew Maker" data-cart-price="38" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Cold Brew Maker</h3>
           <span class="category-badge manual">Manual Brewer</span>
@@ -226,10 +236,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$38</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="accessory">
+      <article class="coffee-card" data-category="accessory" data-cart-id="ceramic-hand-grinder" data-cart-name="Ceramic Hand Grinder" data-cart-price="45" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Ceramic Hand Grinder</h3>
           <span class="category-badge accessory">Accessory</span>
@@ -250,10 +261,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$45</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="accessory">
+      <article class="coffee-card" data-category="accessory" data-cart-id="electric-burr-grinder" data-cart-name="Electric Burr Grinder" data-cart-price="120" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Electric Burr Grinder</h3>
           <span class="category-badge accessory">Accessory</span>
@@ -274,10 +286,11 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$120</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
-      <article class="coffee-card" data-category="accessory">
+      <article class="coffee-card" data-category="accessory" data-cart-id="digital-scale-with-timer" data-cart-name="Digital Scale with Timer" data-cart-price="25" data-cart-category="equipment">
         <div class="coffee-card-top">
           <h3>Digital Scale with Timer</h3>
           <span class="category-badge accessory">Accessory</span>
@@ -298,6 +311,7 @@
         </div>
         <div class="coffee-card-footer">
           <span class="price">$25</span>
+          <button type="button" class="btn btn-primary btn-small add-to-cart-btn">Add to Cart</button>
         </div>
       </article>
 
@@ -350,6 +364,7 @@
       <a href="coffee-selection.html">Coffee Selection</a>
       <a href="brewing-equipment.html">Brewing Equipment</a>
       <a href="events.html">Events</a>
+      <a href="cart.html">Cart</a>
       <a href="index.html#newsletter">Join the Club</a>
     </div>
 
