@@ -2,36 +2,382 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Jemima & Nazmul's Walima — Tap to Play</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bean Boutique — a boutique coffee shop for hand-picked blends, brewing equipment and community events. Warm, small-batch coffee culture, now online.">
+<title>Bean Boutique — Small-Batch Coffee, Big Community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="game">
+<!-- ===== Navigation ===== -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="30" height="30">
+          <path d="M10 20h24a2 2 0 0 1 2 2c0 8-5 16-14 16S8 30 8 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M34 22h3a4 4 0 0 1 0 8h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 9c-2 2-2 4 0 6M24 8c-2 2-2 4 0 6M32 9c-2 2-2 4 0 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      Bean&nbsp;Boutique
+    </a>
 
-  <div id="startScreen" class="screen">
-    <h1>💍 Run to the Walima!</h1>
-    <p>Dodge the barriers and make it to the hotel to unlock your invitation.</p>
-    <button id="startBtn" class="big-btn">Tap to Start</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">Our Story</a>
+      <a href="#menu">Blends &amp; Gear</a>
+      <a href="#events">Events</a>
+      <a href="#contact">Visit Us</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="#newsletter" class="btn btn-small btn-outline">Join the Club</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
+</header>
 
-  <canvas id="gameCanvas"></canvas>
+<main>
 
-  <div id="hud">
-    <div id="progressTrack"><div id="progressFill"></div></div>
-    <div id="platesCounter">🍽️ 0/3</div>
+  <!-- ===== Hero ===== -->
+  <section id="home" class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="steam s1"></div>
+      <div class="steam s2"></div>
+      <div class="steam s3"></div>
+      <div class="bean-field"></div>
+    </div>
+    <div class="hero-inner">
+      <p class="eyebrow">Neighbourhood favourite, now brewing online</p>
+      <h1>Warm cups.<br>Real community.</h1>
+      <p class="hero-lede">Hand-picked beans, slow-roasted in small batches and poured with care. Bean Boutique brings the corner-shop feeling to your morning, wherever you are.</p>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn btn-primary">Explore Our Blends</a>
+        <a href="#events" class="btn btn-ghost">See Upcoming Events</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>12+</strong><span>Years roasting</span></div>
+        <div><strong>30</strong><span>Origin blends tried</span></div>
+        <div><strong>500+</strong><span>Neighbours &amp; friends</span></div>
+      </div>
+    </div>
+    <svg class="hero-cup" viewBox="0 0 220 220" aria-hidden="true">
+      <ellipse cx="110" cy="190" rx="70" ry="10" fill="rgba(59,36,24,0.15)"/>
+      <path d="M50 70h100l-9 90a20 20 0 0 1-20 18H79a20 20 0 0 1-20-18L50 70Z" fill="#fff8f0"/>
+      <path d="M50 70h100l-3 30H53l-3-30Z" fill="#e8c9a0"/>
+      <path d="M150 82h14a18 18 0 0 1 0 36h-11" fill="none" stroke="#fff8f0" stroke-width="9" stroke-linecap="round"/>
+      <path d="M62 70c30-16 66-16 96 0" fill="none" stroke="#3b2418" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </section>
+
+  <!-- ===== Featured slideshow ===== -->
+  <section class="slideshow-section" aria-label="Featured products and events">
+    <div class="section-head">
+      <p class="eyebrow">Fresh off the roaster</p>
+      <h2>Featured This Week</h2>
+    </div>
+
+    <div class="slideshow" id="slideshow">
+      <div class="slides" id="slidesTrack">
+
+        <article class="slide">
+          <div class="slide-visual grad-1" aria-hidden="true">
+            <svg viewBox="0 0 120 120" width="88" height="88">
+              <circle cx="60" cy="60" r="34" fill="#fff8f0" opacity="0.15"/>
+              <path d="M40 46a20 12 0 1 0 40 0 20 12 0 1 0-40 0Z" fill="#3b2418"/>
+              <path d="M60 34v24" stroke="#fff8f0" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="slide-body">
+            <span class="tag">New Blend</span>
+            <h3>Ethiopian Sunrise</h3>
+            <p>Bright, floral and citrus-forward — a light roast that wakes up your whole morning.</p>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="slide-visual grad-2" aria-hidden="true">
+            <svg viewBox="0 0 120 120" width="88" height="88">
+              <rect x="38" y="30" width="44" height="60" rx="10" fill="#fff8f0" opacity="0.9"/>
+              <rect x="46" y="42" width="28" height="30" rx="3" fill="#3b2418"/>
+            </svg>
+          </div>
+          <div class="slide-body">
+            <span class="tag">Brewing Gear</span>
+            <h3>Pour-Over Starter Kit</h3>
+            <p>Everything you need to brew café-quality coffee at home — filter, dripper &amp; kettle.</p>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="slide-visual grad-3" aria-hidden="true">
+            <svg viewBox="0 0 120 120" width="88" height="88">
+              <path d="M30 80c8-30 22-46 30-46s22 16 30 46" fill="none" stroke="#fff8f0" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="60" cy="34" r="6" fill="#fff8f0"/>
+            </svg>
+          </div>
+          <div class="slide-body">
+            <span class="tag">This Saturday</span>
+            <h3>Latte Art Workshop</h3>
+            <p>Learn to pour hearts, rosettas and swans with our head barista. Beginners welcome.</p>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="slide-visual grad-4" aria-hidden="true">
+            <svg viewBox="0 0 120 120" width="88" height="88">
+              <path d="M40 50a20 12 0 1 0 40 0 20 12 0 1 0-40 0Z" fill="#3b2418"/>
+              <path d="M40 68a20 12 0 1 0 40 0 20 12 0 1 0-40 0Z" fill="#3b2418" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="slide-body">
+            <span class="tag">Fan Favourite</span>
+            <h3>Sumatra Dark Roast</h3>
+            <p>Deep, earthy and full-bodied with a smoky finish — a bold cup for slow evenings.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <button class="slide-nav prev" id="prevSlide" aria-label="Previous slide">&#10094;</button>
+      <button class="slide-nav next" id="nextSlide" aria-label="Next slide">&#10095;</button>
+      <div class="slide-dots" id="slideDots"></div>
+    </div>
+  </section>
+
+  <!-- ===== About / Story ===== -->
+  <section id="about" class="about">
+    <div class="about-visual" aria-hidden="true">
+      <svg viewBox="0 0 300 260" class="about-illustration">
+        <circle cx="150" cy="130" r="120" fill="#f3e5d3"/>
+        <ellipse cx="150" cy="210" rx="95" ry="14" fill="rgba(59,36,24,0.1)"/>
+        <path d="M95 100h110l-10 95a22 22 0 0 1-22 20h-46a22 22 0 0 1-22-20l-10-95Z" fill="#6f4e37"/>
+        <path d="M95 100h110l-4 26H99l-4-26Z" fill="#e8c9a0"/>
+        <path d="M205 112h16a20 20 0 0 1 0 40h-13" fill="none" stroke="#6f4e37" stroke-width="8" stroke-linecap="round"/>
+        <g fill="#3b2418">
+          <ellipse cx="70" cy="70" rx="10" ry="6" transform="rotate(-20 70 70)"/>
+          <ellipse cx="90" cy="55" rx="10" ry="6" transform="rotate(10 90 55)"/>
+          <ellipse cx="55" cy="90" rx="10" ry="6" transform="rotate(35 55 90)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="about-copy">
+      <p class="eyebrow">Our Story</p>
+      <h2>Started on one street corner. Still tastes like it.</h2>
+      <p>Bean Boutique opened as a five-table shop with a single roaster and a big idea: coffee tastes better when it's shared. Over a decade later, we still roast in small batches, greet regulars by name, and treat every cup like it's for a friend.</p>
+      <p>Now we're bringing that same warmth online — so wherever you're brewing from, you're part of the neighbourhood too.</p>
+      <ul class="about-points">
+        <li>Direct-trade beans from farms we've visited ourselves</li>
+        <li>Roasted weekly in-house, never sitting on a shelf</li>
+        <li>Equipment we actually use behind our own counter</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Why us / infographic ===== -->
+  <section class="why">
+    <div class="section-head">
+      <p class="eyebrow">Why neighbours choose us</p>
+      <h2>More Than a Cup</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M24 42s-16-9-16-22a10 10 0 0 1 16-8 10 10 0 0 1 16 8c0 13-16 22-16 22Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <h3>Ethically Sourced</h3>
+        <p>Fair prices paid direct to growers, every harvest.</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M24 6c6 8 12 14 12 22a12 12 0 1 1-24 0c0-3 1-5 3-8 1 3 3 4 4 3-1-5 0-11 5-17Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <h3>Freshly Roasted</h3>
+        <p>Small batches, roasted weekly — never stale, always vivid.</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="16" cy="18" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="32" cy="18" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M6 40c0-7 5-12 10-12s10 5 10 12M22 40c0-7 5-12 10-12s10 5 10 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>Community First</h3>
+        <p>Workshops, open mics and cuppings that bring people together.</p>
+      </div>
+      <div class="why-card">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M14 20h20a2 2 0 0 1 2 2c0 7-4.5 14-12 14S12 29 12 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M34 22h2a4 4 0 0 1 0 8h-2" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>Expert Baristas</h3>
+        <p>Trained hands behind every pour, pull and steam.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Menu / Products ===== -->
+  <section id="menu" class="products">
+    <div class="section-head">
+      <p class="eyebrow">Blends &amp; Brewing Gear</p>
+      <h2>Bring the Shop Home</h2>
+      <p class="section-sub">Online ordering is brewing — for now, browse our favourites and stop by to pick some up.</p>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-thumb grad-1" aria-hidden="true">☕</div>
+        <h3>House Blend</h3>
+        <p>Balanced, nutty and smooth — our everyday classic.</p>
+        <span class="price">$16 / 340g</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb grad-2" aria-hidden="true">🌱</div>
+        <h3>Ethiopian Sunrise</h3>
+        <p>Light roast, floral aroma, notes of bergamot and peach.</p>
+        <span class="price">$19 / 340g</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb grad-4" aria-hidden="true">🌑</div>
+        <h3>Sumatra Dark Roast</h3>
+        <p>Bold, earthy and full-bodied with a smoky finish.</p>
+        <span class="price">$18 / 340g</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb grad-3" aria-hidden="true">🌙</div>
+        <h3>Decaf Delight</h3>
+        <p>All the flavour, none of the buzz — smooth and mellow.</p>
+        <span class="price">$17 / 340g</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb grad-5" aria-hidden="true">🫖</div>
+        <h3>Pour-Over Dripper</h3>
+        <p>Ceramic dripper for a clean, bright cup every time.</p>
+        <span class="price">$28</span>
+      </div>
+      <div class="product-card">
+        <div class="product-thumb grad-6" aria-hidden="true">⚙️</div>
+        <h3>Hand Grinder</h3>
+        <p>Consistent grind, quiet mornings, no cord required.</p>
+        <span class="price">$45</span>
+      </div>
+    </div>
+
+    <div class="product-note">
+      <p>🛒 Online checkout is on its way. <strong>Sign up below</strong> and we'll let you know the moment it's live.</p>
+    </div>
+  </section>
+
+  <!-- ===== Events ===== -->
+  <section id="events" class="events">
+    <div class="section-head light">
+      <p class="eyebrow">What's Brewing</p>
+      <h2>Upcoming Events</h2>
+    </div>
+    <div class="event-grid">
+      <div class="event-card">
+        <div class="event-date"><span>AUG</span><strong>22</strong></div>
+        <div class="event-info">
+          <h3>Latte Art Workshop</h3>
+          <p>Hands-on session with our head barista. Hearts, rosettas &amp; swans.</p>
+          <span class="event-meta">10:00 AM · In-store</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><span>AUG</span><strong>29</strong></div>
+        <div class="event-info">
+          <h3>Coffee Cupping Night</h3>
+          <p>Taste four origins side by side and learn to spot tasting notes.</p>
+          <span class="event-meta">6:30 PM · In-store</span>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date"><span>SEP</span><strong>06</strong></div>
+        <div class="event-info">
+          <h3>Live Acoustic Sundays</h3>
+          <p>Local musicians, warm cups and a slow, easy morning.</p>
+          <span class="event-meta">9:00 AM · Patio</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Newsletter ===== -->
+  <section id="newsletter" class="newsletter">
+    <h2>Join the Bean Boutique Club</h2>
+    <p>First dibs on new blends, event invites, and a little something for your first order.</p>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" required placeholder="you@example.com" aria-label="Email address">
+      <button type="submit" class="btn btn-primary">Sign Me Up</button>
+    </form>
+    <p class="form-note" id="newsletterNote" role="status"></p>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer id="contact" class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#home" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="26" height="26">
+            <path d="M10 20h24a2 2 0 0 1 2 2c0 8-5 16-14 16S8 30 8 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M34 22h3a4 4 0 0 1 0 8h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Bean&nbsp;Boutique
+      </a>
+      <p>Small-batch coffee and brewing gear, roasted with the neighbourhood in mind.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v6H14v-6h2.5l.5-3H14V9.8c0-.5.3-.8.8-.8Z" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#about">Our Story</a>
+      <a href="#menu">Blends &amp; Gear</a>
+      <a href="#events">Events</a>
+      <a href="#newsletter">Join the Club</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <p>24 Roastery Lane<br>Riverside District</p>
+      <p>Mon–Fri: 7am – 6pm<br>Sat–Sun: 8am – 5pm</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Get in Touch</h4>
+      <p><a href="mailto:hello@beanboutique.example">hello@beanboutique.example</a></p>
+      <p><a href="tel:+10000000000">(000) 000-0000</a></p>
+    </div>
   </div>
-
-  <div id="controls">
-    <button id="jumpBtn" class="big-btn">JUMP</button>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Bean Boutique. Made with warmth, one cup at a time.</p>
   </div>
+</footer>
 
-  <div id="overlay" class="screen hidden">
-    <div id="overlayContent"></div>
-    <button id="overlayBtn" class="big-btn">Continue</button>
+<!-- ===== First-visit discount modal ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close popup">&times;</button>
+    <div class="modal-visual" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="64" height="64">
+        <path d="M20 40h50a4 4 0 0 1 4 4c0 15-10 30-29 30S16 59 16 44a4 4 0 0 1 4-4Z" fill="#fff8f0"/>
+        <path d="M70 44h8a10 10 0 0 1 0 20h-6" fill="none" stroke="#fff8f0" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="tag modal-tag">Welcome!</span>
+    <h3 id="modalTitle">Take 15% off your first order</h3>
+    <p>Sign up for the Bean Boutique newsletter and we'll send your discount code straight away — plus first word on new blends and events.</p>
+    <form id="modalForm">
+      <input type="email" required placeholder="you@example.com" aria-label="Email address">
+      <button type="submit" class="btn btn-primary btn-block">Get My Discount</button>
+    </form>
+    <button class="modal-dismiss" id="modalDismiss">No thanks, maybe later</button>
   </div>
-
 </div>
 
 <script src="script.js"></script>
