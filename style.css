@@ -37,6 +37,21 @@ h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; color: var(--coffee
 h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); }
 h3 { font-size: 1.3rem; }
 
+/* Visually hidden but still announced by screen readers — keeps the
+   heading outline correct (no skipped levels) without duplicating
+   visible on-page copy. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.12em;
