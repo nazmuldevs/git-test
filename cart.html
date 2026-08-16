@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Review the coffee blends and brewing equipment you've saved at Bean Boutique, adjust quantities, and start checkout.">
+<title>Your Cart — Bean Boutique</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="30" height="30">
+          <path d="M10 20h24a2 2 0 0 1 2 2c0 8-5 16-14 16S8 30 8 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M34 22h3a4 4 0 0 1 0 8h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 9c-2 2-2 4 0 6M24 8c-2 2-2 4 0 6M32 9c-2 2-2 4 0 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      Bean&nbsp;Boutique
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">Our Story</a>
+      <a href="coffee-selection.html">Coffee Selection</a>
+      <a href="brewing-equipment.html">Brewing Equipment</a>
+      <a href="events.html">Events</a>
+      <a href="special-offers.html">Offers</a>
+      <a href="index.html#contact">Visit Us</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="index.html#newsletter" class="btn btn-small btn-outline">Join the Club</a>
+      <a href="cart.html" class="cart-link" aria-label="View shopping cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="currentColor"/><circle cx="18" cy="21" r="1.5" fill="currentColor"/></svg>
+        <span class="cart-count hidden-badge" id="cartCount">0</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== Page header ===== -->
+  <section class="page-header">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Your Cart</p>
+    <h1>Your Cart</h1>
+    <p class="page-header-lede">Save your favourite blends and gear here, adjust quantities any time, and check out when you're ready — pickup in-store, online payment coming soon.</p>
+  </section>
+
+  <!-- ===== Cart ===== -->
+  <h2 class="sr-only">Your Cart Items</h2>
+  <div class="cart-page" id="cartPageContent">
+    <!-- rendered by script.js from localStorage -->
+  </div>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer id="contact" class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="26" height="26">
+            <path d="M10 20h24a2 2 0 0 1 2 2c0 8-5 16-14 16S8 30 8 22a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M34 22h3a4 4 0 0 1 0 8h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Bean&nbsp;Boutique
+      </a>
+      <p>Small-batch coffee and brewing gear, roasted with the neighbourhood in mind.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v6H14v-6h2.5l.5-3H14V9.8c0-.5.3-.8.8-.8Z" fill="currentColor"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <a href="index.html#about">Our Story</a>
+      <a href="coffee-selection.html">Coffee Selection</a>
+      <a href="brewing-equipment.html">Brewing Equipment</a>
+      <a href="events.html">Events</a>
+      <a href="special-offers.html">Offers</a>
+      <a href="cart.html">Cart</a>
+      <a href="index.html#newsletter">Join the Club</a>
+    </div>
+
+    <div class="footer-col">
+      <h3>Visit</h3>
+      <p>24 Roastery Lane<br>Riverside District</p>
+      <p>Mon–Fri: 7am – 6pm<br>Sat–Sun: 8am – 5pm</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Get in Touch</h3>
+      <p><a href="mailto:hello@beanboutique.example">hello@beanboutique.example</a></p>
+      <p><a href="tel:+10000000000">(000) 000-0000</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Bean Boutique. Made with warmth, one cup at a time.</p>
+  </div>
+</footer>
+
+<!-- ===== First-visit discount modal ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close popup">&times;</button>
+    <div class="modal-visual" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="64" height="64">
+        <path d="M20 40h50a4 4 0 0 1 4 4c0 15-10 30-29 30S16 59 16 44a4 4 0 0 1 4-4Z" fill="#fff8f0"/>
+        <path d="M70 44h8a10 10 0 0 1 0 20h-6" fill="none" stroke="#fff8f0" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="tag modal-tag">Welcome!</span>
+    <h3 id="modalTitle">Take 15% off your first order</h3>
+    <p>Sign up for the Bean Boutique newsletter and we'll send your discount code straight away — plus first word on new blends and events.</p>
+    <form id="modalForm">
+      <input type="email" required placeholder="you@example.com" aria-label="Email address">
+      <button type="submit" class="btn btn-primary btn-block">Get My Discount</button>
+    </form>
+    <button class="modal-dismiss" id="modalDismiss">No thanks, maybe later</button>
+  </div>
+</div>
+
+<!-- ===== Checkout modal ===== -->
+<div class="modal-overlay" id="checkoutModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <button class="modal-close" id="checkoutModalClose" aria-label="Close popup">&times;</button>
+
+    <div id="checkoutFormView">
+      <div class="modal-visual" aria-hidden="true">
+        <svg viewBox="0 0 100 100" width="56" height="56"><path d="M22 30h6l6.8 34.2a5 5 0 0 0 5 4h24a5 5 0 0 0 5-4L74 38H32" fill="none" stroke="#fff8f0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="45" cy="80" r="4" fill="#fff8f0"/><circle cx="66" cy="80" r="4" fill="#fff8f0"/></svg>
+      </div>
+      <span class="tag modal-tag">Almost There</span>
+      <h3 id="checkoutModalTitle">Confirm Your Order</h3>
+      <p id="checkoutSummaryText">0 items</p>
+      <form id="checkoutForm">
+        <input type="text" required placeholder="Full name" aria-label="Full name">
+        <input type="email" required placeholder="you@example.com" aria-label="Email address">
+        <button type="submit" class="btn btn-primary btn-block">Place Order Request</button>
+      </form>
+      <p class="modal-fineprint">Online payment isn't live yet — we'll email you to arrange pickup &amp; payment.</p>
+    </div>
+
+    <div id="checkoutSuccessView" class="hidden-card">
+      <div class="modal-visual" aria-hidden="true">
+        <svg viewBox="0 0 100 100" width="56" height="56">
+          <path d="M25 52l16 16 34-38" fill="none" stroke="#fff8f0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Thanks, <span id="checkoutSuccessName"></span>!</h3>
+      <p>Your order request has been received. We'll email you shortly to arrange payment and pickup.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Cookie / privacy consent banner ===== -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie and privacy preferences">
+  <div class="cookie-banner-head">
+    <span class="cookie-banner-icon" aria-hidden="true">🍪</span>
+    <p>We use your browser's local storage to remember your cart, subscription plan and preferences — nothing is sent to a server or shared with anyone.</p>
+  </div>
+  <div class="cookie-banner-details" id="cookieDetails">
+    <p>What we store on this device:</p>
+    <ul>
+      <li>🛒 Cart items and quantities</li>
+      <li>☕ Subscription plan, if you've started one</li>
+      <li>🎟️ Events you've registered for</li>
+      <li>🎁 Whether you've seen the welcome discount</li>
+    </ul>
+  </div>
+  <div class="cookie-banner-actions">
+    <button type="button" class="btn btn-primary btn-small" id="cookieAccept">Accept All</button>
+    <button type="button" class="btn-cookie-outline" id="cookieEssential">Essential Only</button>
+    <button type="button" class="cookie-banner-link" id="cookieDetailsToggle">What do you store?</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

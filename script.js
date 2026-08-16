@@ -1,404 +1,768 @@
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const startScreen = document.getElementById('startScreen');
-const startBtn = document.getElementById('startBtn');
-const jumpBtn = document.getElementById('jumpBtn');
-const overlay = document.getElementById('overlay');
-const overlayContent = document.getElementById('overlayContent');
-const overlayBtn = document.getElementById('overlayBtn');
-const progressFill = document.getElementById('progressFill');
-const platesCounterEl = document.getElementById('platesCounter');
+// ===== Footer year =====
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-const GROUND_OFFSET = 40;
-const GRAVITY = 0.9;
-const JUMP_VELOCITY = -15;
-const SCROLL_SPEED = 4;
-const TRAIN_SPEED = 3.2;
-const CHAR_X = 60;
+// ===== Shopping cart (shared across every page) =====
+const CART_KEY = 'beanBoutiqueCart';
 
-const CHECKPOINTS = [1400, 2900, 4400];
-const STAGE_STARTS = [0, CHECKPOINTS[0], CHECKPOINTS[1]];
-const REQUIRED_PLATES = 3;
-const PLATE_Y_OFFSET = 80;
-const PLATE_HIT_TOLERANCE = 40;
-const FOOD_EMOJIS = ['🍛', '🍗', '🍰', '🥘'];
-
-const BUILDING_PATTERN_WIDTH = 300;
-const BUILDING_SHAPES = [
-  { x: 10, w: 40, h: 70 },
-  { x: 70, w: 55, h: 110 },
-  { x: 140, w: 35, h: 55 },
-  { x: 190, w: 60, h: 130 },
-  { x: 260, w: 45, h: 85 },
-];
-const METRO_SPACING = 110;
-
-const STAGE_INFO = [
-  {
-    title: '🎉 You\'re Invited!',
-    body: 'A Walima invitation is waiting for you just up ahead...',
-  },
-  {
-    title: '💍 Jemima & Nazmul',
-    body: 'The bride and groom are tying the knot! Keep running to find out where and when.',
-  },
-];
-
-let state = 'start';
-let overlayMode = 'continue';
-let distance = 0;
-let charY = 0;
-let velocity = 0;
-let isJumping = false;
-let barriers = [];
-let plates = [];
-let trees = [];
-let stageIndex = 0;
-let platesCollected = 0;
-let nextBarrierAt = 0;
-let nextPlateAt = 0;
-let nextTreeAt = 0;
-let flashTimer = 0;
-let collectFlash = 0;
-let bgOffset = 0;
-let metroOffsetPx = 0;
-let trainX = 300;
-let confettiInterval = null;
-
-function randomGap() {
-  return 350 + Math.random() * 250;
-}
-function randomPlateGap() {
-  return 260 + Math.random() * 220;
-}
-function randomTreeGap() {
-  return 180 + Math.random() * 160;
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (err) { return []; }
 }
 
-function groundY() {
-  return canvas.height - GROUND_OFFSET;
+function saveCart(cart) {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (err) { /* storage unavailable */ }
+  updateCartBadge();
 }
 
-function resizeCanvas() {
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-
-function resetToStageStart(idx) {
-  distance = STAGE_STARTS[idx];
-  charY = 0;
-  velocity = 0;
-  isJumping = false;
-  barriers = [];
-  plates = [];
-  platesCollected = 0;
-  nextBarrierAt = distance + randomGap();
-  nextPlateAt = distance + randomPlateGap();
-  flashTimer = 0;
-}
-
-function reset() {
-  stageIndex = 0;
-  resetToStageStart(0);
-  trees = [];
-  nextTreeAt = randomTreeGap();
-  bgOffset = 0;
-  metroOffsetPx = 0;
-  trainX = canvas.width + 200;
-}
-
-function jump() {
-  if (state !== 'running' || isJumping) return;
-  velocity = JUMP_VELOCITY;
-  isJumping = true;
-}
-
-function startGame() {
-  resizeCanvas();
-  reset();
-  state = 'running';
-  startScreen.classList.add('hidden');
-  overlay.classList.add('hidden');
-}
-
-function stageReveal(index) {
-  state = 'paused';
-  overlayMode = 'continue';
-  stageIndex = index + 1;
-  barriers = [];
-  plates = [];
-  platesCollected = 0;
-  nextBarrierAt = distance + randomGap();
-  nextPlateAt = distance + randomPlateGap();
-  const s = STAGE_INFO[index];
-  overlayContent.innerHTML = `<h2>${s.title}</h2><p>${s.body}</p>`;
-  overlayBtn.textContent = 'Continue';
-  overlay.classList.remove('hidden');
-}
-
-function finalReveal() {
-  state = 'finished';
-  overlayMode = 'finished';
-  stageIndex = CHECKPOINTS.length;
-  overlayContent.innerHTML = `
-    <h2>🎊 You Made It! 🎊</h2>
-    <p class="names">Jemima <span class="amp">&amp;</span> Nazmul</p>
-    <p>are getting married, and you're invited to the Walima!</p>
-    <div class="details">
-      <p>📍 Shiny Hotel and Co.<br>Mirpur 12, City Centre, 12th Floor</p>
-      <p>📅 Saturday, August 1, 2026</p>
-      <p>🕗 8:00 PM</p>
-    </div>
-    <p>We can't wait to celebrate with you!</p>
-  `;
-  overlayBtn.textContent = '🔁 Play Again';
-  overlay.classList.remove('hidden');
-  launchConfetti();
-}
-
-function triggerHit() {
-  state = 'paused';
-  overlayMode = 'retry';
-  overlayContent.innerHTML = `<h2>💥 Oops!</h2><p>You hit a barrier — let's try that stretch again.</p>`;
-  overlayBtn.textContent = 'Try Again';
-  overlay.classList.remove('hidden');
-}
-
-function update() {
-  distance += SCROLL_SPEED;
-  bgOffset += SCROLL_SPEED * 0.25;
-  metroOffsetPx += SCROLL_SPEED * 0.5;
-
-  trainX -= TRAIN_SPEED;
-  if (trainX < -80) {
-    trainX = canvas.width + 100 + Math.random() * 150;
-  }
-
-  if (isJumping) {
-    velocity += GRAVITY;
-    charY += velocity;
-    if (charY >= 0) {
-      charY = 0;
-      velocity = 0;
-      isJumping = false;
-    }
-  }
-
-  if (stageIndex < CHECKPOINTS.length && distance >= nextBarrierAt) {
-    barriers.push({ x: canvas.width + 20, hit: false });
-    nextBarrierAt = distance + randomGap();
-  }
-  if (stageIndex < CHECKPOINTS.length && distance >= nextPlateAt) {
-    plates.push({
-      x: canvas.width + 20,
-      hit: false,
-      emoji: FOOD_EMOJIS[Math.floor(Math.random() * FOOD_EMOJIS.length)],
-    });
-    nextPlateAt = distance + randomPlateGap();
-  }
-  if (distance >= nextTreeAt) {
-    trees.push({ x: canvas.width + 20, emoji: Math.random() > 0.3 ? '🌳' : '🌴' });
-    nextTreeAt = distance + randomTreeGap();
-  }
-
-  barriers.forEach((b) => {
-    b.x -= SCROLL_SPEED;
-    if (!b.hit && Math.abs(b.x - CHAR_X) < 26 && charY > -18) {
-      b.hit = true;
-      triggerHit();
-    }
+function updateCartBadge() {
+  const count = getCart().reduce((sum, item) => sum + item.qty, 0);
+  document.querySelectorAll('.cart-count').forEach((badge) => {
+    badge.textContent = String(count);
+    badge.classList.toggle('hidden-badge', count === 0);
   });
-  barriers = barriers.filter((b) => b.x > -40);
+}
 
-  plates.forEach((p) => {
-    p.x -= SCROLL_SPEED;
-    if (!p.hit && Math.abs(p.x - CHAR_X) < 26 && Math.abs(charY - -PLATE_Y_OFFSET) < PLATE_HIT_TOLERANCE) {
-      p.hit = true;
-      platesCollected++;
-      collectFlash = 8;
-    }
+function addToCart(product) {
+  const cart = getCart();
+  const existing = cart.find((item) => item.id === product.id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: product.id, name: product.name, price: product.price, category: product.category, qty: 1 });
+  }
+  saveCart(cart);
+}
+
+let cartToastTimer = null;
+function showToast(message) {
+  let toast = document.getElementById('cartToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cartToast';
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('visible');
+  clearTimeout(cartToastTimer);
+  cartToastTimer = setTimeout(() => toast.classList.remove('visible'), 2000);
+}
+
+updateCartBadge();
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.add-to-cart-btn');
+  if (!btn) return;
+  const source = btn.dataset.cartId ? btn : btn.closest('[data-cart-id]');
+  if (!source) return;
+  addToCart({
+    id: source.dataset.cartId,
+    name: source.dataset.cartName,
+    price: parseFloat(source.dataset.cartPrice) || 0,
+    category: source.dataset.cartCategory || 'coffee',
   });
-  plates = plates.filter((p) => p.x > -40 && !p.hit);
-
-  trees.forEach((t) => (t.x -= SCROLL_SPEED));
-  trees = trees.filter((t) => t.x > -60);
-
-  if (
-    stageIndex < CHECKPOINTS.length &&
-    distance >= CHECKPOINTS[stageIndex] &&
-    platesCollected >= REQUIRED_PLATES
-  ) {
-    if (stageIndex === CHECKPOINTS.length - 1) {
-      finalReveal();
-    } else {
-      stageReveal(stageIndex);
-    }
-  }
-
-  progressFill.style.width = `${Math.min(100, (distance / CHECKPOINTS[CHECKPOINTS.length - 1]) * 100)}%`;
-  platesCounterEl.textContent = `🍽️ ${platesCollected}/${REQUIRED_PLATES}`;
-}
-
-function drawSky() {
-  const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  grad.addColorStop(0, '#8ec9e8');
-  grad.addColorStop(1, '#ffdca8');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-function drawBuildings() {
-  const gy = groundY();
-  const offset = bgOffset % BUILDING_PATTERN_WIDTH;
-  const tilesNeeded = Math.ceil(canvas.width / BUILDING_PATTERN_WIDTH) + 2;
-  for (let t = -1; t < tilesNeeded; t++) {
-    const baseX = t * BUILDING_PATTERN_WIDTH - offset;
-    BUILDING_SHAPES.forEach((b, i) => {
-      ctx.fillStyle = i % 2 === 0 ? '#7c6b86' : '#5f5069';
-      ctx.fillRect(baseX + b.x, gy - b.h, b.w, b.h);
-    });
-  }
-}
-
-function drawMetro() {
-  const gy = groundY();
-  const railY = gy - Math.min(150, gy * 0.55);
-  const offset = metroOffsetPx % METRO_SPACING;
-  const count = Math.ceil(canvas.width / METRO_SPACING) + 2;
-
-  ctx.strokeStyle = '#8a919b';
-  ctx.lineWidth = 4;
-  for (let i = -1; i < count; i++) {
-    const px = i * METRO_SPACING - offset;
-    ctx.beginPath();
-    ctx.moveTo(px, railY);
-    ctx.lineTo(px, gy);
-    ctx.stroke();
-  }
-
-  ctx.strokeStyle = '#b0b8c1';
-  ctx.lineWidth = 6;
-  ctx.beginPath();
-  ctx.moveTo(0, railY);
-  ctx.lineTo(canvas.width, railY);
-  ctx.stroke();
-
-  ctx.font = '28px serif';
-  ctx.fillText('🚆', trainX, railY + 6);
-}
-
-function drawGround() {
-  const gy = groundY();
-  ctx.fillStyle = '#7fae5c';
-  ctx.fillRect(0, gy - 6, canvas.width, 10);
-  ctx.fillStyle = '#cbb994';
-  ctx.fillRect(0, gy + 4, canvas.width, canvas.height - (gy + 4));
-}
-
-function drawTrees() {
-  ctx.font = '30px serif';
-  trees.forEach((t) => ctx.fillText(t.emoji, t.x, groundY() + 6));
-}
-
-function drawHotelMarker() {
-  const hotelX = CHAR_X + (CHECKPOINTS[CHECKPOINTS.length - 1] - distance);
-  if (hotelX < canvas.width + 50) {
-    ctx.font = '40px serif';
-    ctx.fillText('🏨', hotelX, groundY());
-  }
-}
-
-function drawBarriers() {
-  ctx.font = '30px serif';
-  barriers.forEach((b) => ctx.fillText('🚧', b.x, groundY()));
-}
-
-function drawPlates() {
-  ctx.font = '28px serif';
-  plates.forEach((p) => ctx.fillText(p.emoji, p.x, groundY() - PLATE_Y_OFFSET));
-}
-
-function drawCharacter() {
-  ctx.font = '34px serif';
-  ctx.fillText('🏃', CHAR_X, groundY() + charY);
-}
-
-function drawFlash() {
-  if (flashTimer > 0) {
-    ctx.fillStyle = `rgba(220,50,50,${(flashTimer / 10) * 0.35})`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    flashTimer--;
-  }
-  if (collectFlash > 0) {
-    ctx.fillStyle = `rgba(243,217,139,${(collectFlash / 8) * 0.3})`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    collectFlash--;
-  }
-}
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawSky();
-  drawBuildings();
-  drawMetro();
-  drawGround();
-  drawTrees();
-  drawHotelMarker();
-  drawBarriers();
-  drawPlates();
-  drawCharacter();
-  drawFlash();
-}
-
-function loop() {
-  if (state === 'running') {
-    update();
-  }
-  draw();
-  requestAnimationFrame(loop);
-}
-
-function launchConfetti() {
-  const colors = ['#f3d98b', '#c9a227', '#ffffff', '#e8a0bf'];
-  confettiInterval = setInterval(() => {
-    const piece = document.createElement('div');
-    piece.className = 'confetti';
-    piece.style.left = `${Math.random() * 100}%`;
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDuration = `${2 + Math.random() * 2}s`;
-    document.getElementById('game').appendChild(piece);
-    setTimeout(() => piece.remove(), 4000);
-  }, 150);
-}
-
-function handleJump(e) {
-  e.preventDefault();
-  jump();
-}
-
-startBtn.addEventListener('click', startGame);
-jumpBtn.addEventListener('touchstart', handleJump, { passive: false });
-jumpBtn.addEventListener('click', handleJump);
-
-overlayBtn.addEventListener('click', () => {
-  if (overlayMode === 'finished') {
-    clearInterval(confettiInterval);
-    document.querySelectorAll('.confetti').forEach((el) => el.remove());
-    reset();
-    overlay.classList.add('hidden');
-    startScreen.classList.remove('hidden');
-    return;
-  }
-  if (overlayMode === 'retry') {
-    resetToStageStart(stageIndex);
-    overlay.classList.add('hidden');
-    state = 'running';
-    return;
-  }
-  overlay.classList.add('hidden');
-  state = 'running';
+  showToast(`Added ${source.dataset.cartName} to cart`);
+  btn.classList.add('added');
+  const originalText = btn.textContent;
+  btn.textContent = 'Added ✓';
+  setTimeout(() => {
+    btn.classList.remove('added');
+    btn.textContent = originalText;
+  }, 1400);
 });
 
-resizeCanvas();
-loop();
+// ===== Copy promo code (any page) =====
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-code-btn');
+  if (!btn) return;
+  const code = btn.dataset.code || '';
+  const originalText = btn.textContent;
+
+  const flashCopied = () => {
+    btn.classList.add('copied');
+    btn.textContent = 'Copied ✓';
+    showToast(`Code ${code} copied to clipboard`);
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = originalText;
+    }, 1500);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(flashCopied).catch(() => showToast(`Your code: ${code}`));
+  } else {
+    showToast(`Your code: ${code}`);
+  }
+});
+
+// ===== Mobile nav toggle =====
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+// Highlight active nav link based on scroll position (homepage only —
+// other pages set their current-page link active statically in HTML)
+if (document.getElementById('home')) {
+  const sections = document.querySelectorAll('main section[id], .hero[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+
+  const updateActiveLink = () => {
+    let currentId = 'home';
+    const scrollPos = window.scrollY + 120;
+    sections.forEach((section) => {
+      if (scrollPos >= section.offsetTop) currentId = section.id;
+    });
+    navAnchors.forEach((a) => {
+      a.classList.toggle('active', a.getAttribute('href') === `#${currentId}`);
+    });
+  };
+  window.addEventListener('scroll', updateActiveLink, { passive: true });
+}
+
+// ===== Slideshow (homepage only) =====
+const slideshow = document.getElementById('slideshow');
+if (slideshow) {
+  const slidesTrack = document.getElementById('slidesTrack');
+  const slides = slidesTrack.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById('slideDots');
+  const prevBtn = document.getElementById('prevSlide');
+  const nextBtn = document.getElementById('nextSlide');
+
+  let currentSlide = 0;
+  let slideTimer = null;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap.querySelectorAll('button');
+
+  function goToSlide(index) {
+    currentSlide = (index + slides.length) % slides.length;
+    slidesTrack.className = slidesTrack.className.replace(/\bslide-pos-\d+\b/, '').trim();
+    slidesTrack.classList.add(`slide-pos-${currentSlide}`);
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  function startAutoplay() {
+    stopAutoplay();
+    slideTimer = setInterval(nextSlide, 5000);
+  }
+  function stopAutoplay() {
+    if (slideTimer) clearInterval(slideTimer);
+  }
+
+  nextBtn.addEventListener('click', () => { nextSlide(); startAutoplay(); });
+  prevBtn.addEventListener('click', () => { prevSlide(); startAutoplay(); });
+  slideshow.addEventListener('mouseenter', stopAutoplay);
+  slideshow.addEventListener('mouseleave', startAutoplay);
+
+  startAutoplay();
+}
+
+// ===== Catalogue filter tabs + animated text search =====
+// (coffee-selection, brewing-equipment and events pages all share this markup)
+const filterTabs = document.querySelectorAll('.filter-tab');
+const catalogueSearchInput = document.querySelector('.catalogue-search-input');
+if (filterTabs.length || catalogueSearchInput) {
+  const coffeeCards = document.querySelectorAll('.coffee-card');
+  const catalogueEmptyState = document.querySelector('.catalogue-empty');
+
+  const cardHideTimers = new WeakMap();
+
+  function animateCardOut(card) {
+    if (card.classList.contains('card-exit')) return;
+    card.classList.add('card-exit');
+    clearTimeout(cardHideTimers.get(card));
+    cardHideTimers.set(card, setTimeout(() => card.classList.add('card-gone'), 260));
+  }
+
+  function animateCardIn(card) {
+    clearTimeout(cardHideTimers.get(card));
+    if (!card.classList.contains('card-exit') && !card.classList.contains('card-gone')) return;
+    card.classList.remove('card-gone');
+    void card.offsetWidth; // force reflow so the transition below actually plays
+    card.classList.remove('card-exit');
+  }
+
+  function updateCatalogueVisibility() {
+    const query = catalogueSearchInput ? catalogueSearchInput.value.trim().toLowerCase() : '';
+    let anyVisible = false;
+    coffeeCards.forEach((card) => {
+      const matchesSearch = query === '' || card.textContent.toLowerCase().includes(query);
+      const matchesCategory = !card.classList.contains('hidden-card');
+      if (matchesSearch) animateCardIn(card); else animateCardOut(card);
+      if (matchesSearch && matchesCategory) anyVisible = true;
+    });
+    if (catalogueEmptyState) catalogueEmptyState.classList.toggle('visible', !anyVisible);
+  }
+
+  filterTabs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterTabs.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      coffeeCards.forEach((card) => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('hidden-card', !match);
+      });
+      updateCatalogueVisibility();
+    });
+  });
+
+  if (catalogueSearchInput) {
+    catalogueSearchInput.addEventListener('input', updateCatalogueVisibility);
+  }
+}
+
+// ===== Newsletter form (inline, in-page) =====
+const newsletterForm = document.getElementById('newsletterForm');
+const newsletterNote = document.getElementById('newsletterNote');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterNote.textContent = "You're on the list! Check your inbox for a welcome note.";
+    newsletterForm.reset();
+  });
+}
+
+// ===== First-visit discount modal =====
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+const modalDismiss = document.getElementById('modalDismiss');
+const modalForm = document.getElementById('modalForm');
+const STORAGE_KEY = 'beanBoutiqueDiscountSeen';
+
+if (modalOverlay) {
+  function openModal() {
+    modalOverlay.classList.add('visible');
+    document.body.classList.add('no-scroll');
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
+    try { localStorage.setItem(STORAGE_KEY, 'true'); } catch (err) { /* storage unavailable */ }
+    if (window.__maybeShowCookieBanner) window.__maybeShowCookieBanner();
+  }
+
+  try {
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      setTimeout(openModal, 1800);
+    }
+  } catch (err) {
+    setTimeout(openModal, 1800);
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modalDismiss.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('visible')) closeModal();
+  });
+
+  modalForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const modal = modalOverlay.querySelector('.modal');
+    modal.innerHTML = `
+      <div class="modal-visual" aria-hidden="true">
+        <svg viewBox="0 0 100 100" width="56" height="56">
+          <path d="M25 52l16 16 34-38" fill="none" stroke="#fff8f0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>You're in! 🎉</h3>
+      <p>Your code <strong>WELCOME15</strong> is on its way to your inbox. See you at the counter soon.</p>
+    `;
+    setTimeout(closeModal, 2200);
+  });
+}
+
+// ===== Event registration modal (events page only) =====
+const registerOverlay = document.getElementById('registerModalOverlay');
+if (registerOverlay) {
+  const registerClose = document.getElementById('registerModalClose');
+  const registerForm = document.getElementById('registerForm');
+  const registerTitle = document.getElementById('registerModalTitle');
+  const registerMeta = document.getElementById('registerEventMeta');
+  const registerFormView = document.getElementById('registerFormView');
+  const registerSuccessView = document.getElementById('registerSuccessView');
+  const successName = document.getElementById('successName');
+  const successEvent = document.getElementById('successEvent');
+  const REGISTER_KEY = 'beanBoutiqueRegisteredEvents';
+
+  let activeEventId = null;
+  let activeEventName = '';
+
+  function getRegisteredIds() {
+    try { return JSON.parse(localStorage.getItem(REGISTER_KEY)) || []; } catch (err) { return []; }
+  }
+  function saveRegisteredIds(ids) {
+    try { localStorage.setItem(REGISTER_KEY, JSON.stringify(ids)); } catch (err) { /* storage unavailable */ }
+  }
+  function markCardRegistered(card) {
+    const btn = card.querySelector('.register-btn');
+    if (btn) {
+      btn.textContent = "You're Registered ✓";
+      btn.disabled = true;
+      btn.classList.add('registered');
+    }
+  }
+
+  getRegisteredIds().forEach((id) => {
+    const card = document.querySelector(`.session-card[data-event-id="${id}"]`);
+    if (card) markCardRegistered(card);
+  });
+
+  function openRegisterModal(btn) {
+    const card = btn.closest('.session-card');
+    if (!card) return;
+    activeEventId = card.dataset.eventId;
+    activeEventName = card.dataset.eventName;
+    registerTitle.textContent = `Register: ${activeEventName}`;
+    registerMeta.textContent = `${card.dataset.eventWhen} · ${card.dataset.eventLocation}`;
+    registerForm.reset();
+    registerFormView.classList.remove('hidden-card');
+    registerSuccessView.classList.add('hidden-card');
+    registerOverlay.classList.add('visible');
+    document.body.classList.add('no-scroll');
+  }
+
+  function closeRegisterModal() {
+    registerOverlay.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.register-btn');
+    if (btn && !btn.disabled) openRegisterModal(btn);
+  });
+
+  registerClose.addEventListener('click', closeRegisterModal);
+  registerOverlay.addEventListener('click', (e) => {
+    if (e.target === registerOverlay) closeRegisterModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && registerOverlay.classList.contains('visible')) closeRegisterModal();
+  });
+
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const firstNameInput = document.getElementById('registerFirstName');
+    const lastNameInput = document.getElementById('registerLastName');
+    const emailInput = document.getElementById('registerEmail');
+    const guestsSelect = document.getElementById('registerGuests');
+    const firstName = firstNameInput ? firstNameInput.value.trim() : '';
+    const lastName = lastNameInput ? lastNameInput.value.trim() : '';
+
+    successName.textContent = firstName || 'there';
+    successEvent.textContent = activeEventName;
+    registerFormView.classList.add('hidden-card');
+    registerSuccessView.classList.remove('hidden-card');
+
+    // Submit "through email" per the registration requirement: since this
+    // static prototype has no backend, hand off to the visitor's own mail
+    // client with the registration details pre-filled via a mailto: link.
+    const card = document.querySelector(`.session-card[data-event-id="${activeEventId}"]`);
+    const eventMeta = card ? `${card.dataset.eventWhen} · ${card.dataset.eventLocation}` : '';
+    const guestLabel = guestsSelect ? guestsSelect.options[guestsSelect.selectedIndex].text : '';
+    const mailSubject = encodeURIComponent(`Event Registration: ${activeEventName}`);
+    const mailBody = encodeURIComponent(
+      `First name: ${firstName}\nLast name: ${lastName}\nEmail: ${emailInput ? emailInput.value.trim() : ''}\nGuests: ${guestLabel}\nEvent: ${activeEventName}\nWhen & where: ${eventMeta}`
+    );
+    const mailLink = document.createElement('a');
+    mailLink.href = `mailto:hello@beanboutique.example?subject=${mailSubject}&body=${mailBody}`;
+    mailLink.click();
+
+    const ids = getRegisteredIds();
+    if (activeEventId && !ids.includes(activeEventId)) {
+      ids.push(activeEventId);
+      saveRegisteredIds(ids);
+    }
+    if (card) {
+      markCardRegistered(card);
+      const leftText = card.querySelector('.capacity-left-text');
+      const fill = card.querySelector('.capacity-bar-fill');
+      if (leftText && /^\d+ of \d+$/.test(leftText.textContent)) {
+        const [taken, total] = leftText.textContent.split(' of ').map(Number);
+        const newTaken = Math.min(taken + 1, total);
+        leftText.textContent = `${newTaken} of ${total}`;
+        if (fill) {
+          const pct = Math.round((newTaken / total) * 100);
+          fill.className = fill.className.replace(/\bmeter-fill-\d+\b/, `meter-fill-${pct}`);
+        }
+      }
+    }
+
+    setTimeout(closeRegisterModal, 2400);
+  });
+}
+
+// ===== Cart page (cart.html only) =====
+const cartPageContent = document.getElementById('cartPageContent');
+if (cartPageContent) {
+  const CATEGORY_ICON = { coffee: '☕', equipment: '🫖' };
+  const CATEGORY_LABEL = { coffee: 'Coffee', equipment: 'Equipment' };
+
+  function cartSubtotal(cart) {
+    return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  }
+
+  function renderCart() {
+    const cart = getCart();
+
+    if (cart.length === 0) {
+      cartPageContent.innerHTML = `
+        <div class="cart-empty">
+          <svg viewBox="0 0 24 24" width="56" height="56" aria-hidden="true"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="currentColor"/><circle cx="18" cy="21" r="1.5" fill="currentColor"/></svg>
+          <h2>Your cart is empty</h2>
+          <p>Add a favourite blend or a piece of brewing gear and it'll show up here.</p>
+          <div class="cart-empty-links">
+            <a href="coffee-selection.html" class="btn btn-primary">Browse Coffee</a>
+            <a href="brewing-equipment.html" class="btn btn-ghost">Browse Equipment</a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    const itemsHTML = cart.map((item) => `
+      <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item-thumb" aria-hidden="true">${CATEGORY_ICON[item.category] || '🛍️'}</div>
+        <div class="cart-item-info">
+          <h3>${item.name}</h3>
+          <span class="cart-item-category">${CATEGORY_LABEL[item.category] || 'Item'}</span>
+        </div>
+        <div class="cart-item-qty">
+          <button type="button" class="qty-btn" data-action="decrease" aria-label="Decrease quantity of ${item.name}">−</button>
+          <span class="qty-value">${item.qty}</span>
+          <button type="button" class="qty-btn" data-action="increase" aria-label="Increase quantity of ${item.name}">+</button>
+        </div>
+        <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+        <button type="button" class="cart-item-remove" aria-label="Remove ${item.name} from cart">&times;</button>
+      </div>
+    `).join('');
+
+    const subtotal = cartSubtotal(cart);
+    const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+
+    cartPageContent.innerHTML = `
+      <div class="cart-items">${itemsHTML}</div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="cart-summary-row"><span>Items (${itemCount})</span><span>$${subtotal.toFixed(2)}</span></div>
+        <div class="cart-summary-row"><span>Pickup</span><span>Free</span></div>
+        <div class="cart-summary-total"><span>Total</span><span>$${subtotal.toFixed(2)}</span></div>
+        <button type="button" class="btn btn-primary" id="checkoutBtn">Proceed to Checkout</button>
+        <p class="cart-summary-note">Online payment isn't live yet — we'll email you to arrange pickup &amp; payment.</p>
+      </div>
+    `;
+  }
+
+  function changeQty(id, delta) {
+    const cart = getCart();
+    const item = cart.find((i) => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    const nextCart = item.qty <= 0 ? cart.filter((i) => i.id !== id) : cart;
+    saveCart(nextCart);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    saveCart(getCart().filter((i) => i.id !== id));
+    renderCart();
+  }
+
+  cartPageContent.addEventListener('click', (e) => {
+    const itemEl = e.target.closest('.cart-item');
+    if (itemEl) {
+      const id = itemEl.dataset.id;
+      if (e.target.closest('[data-action="increase"]')) changeQty(id, 1);
+      else if (e.target.closest('[data-action="decrease"]')) changeQty(id, -1);
+      else if (e.target.closest('.cart-item-remove')) removeItem(id);
+      return;
+    }
+    if (e.target.closest('#checkoutBtn')) openCheckoutModal();
+  });
+
+  // ----- Checkout modal -----
+  const checkoutOverlay = document.getElementById('checkoutModalOverlay');
+  const checkoutClose = document.getElementById('checkoutModalClose');
+  const checkoutForm = document.getElementById('checkoutForm');
+  const checkoutSummaryText = document.getElementById('checkoutSummaryText');
+  const checkoutFormView = document.getElementById('checkoutFormView');
+  const checkoutSuccessView = document.getElementById('checkoutSuccessView');
+  const checkoutSuccessName = document.getElementById('checkoutSuccessName');
+
+  function openCheckoutModal() {
+    if (!checkoutOverlay) return;
+    const cart = getCart();
+    if (cart.length === 0) return;
+    const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+    checkoutSummaryText.textContent = `${itemCount} item${itemCount === 1 ? '' : 's'} · $${cartSubtotal(cart).toFixed(2)} total`;
+    checkoutForm.reset();
+    checkoutFormView.classList.remove('hidden-card');
+    checkoutSuccessView.classList.add('hidden-card');
+    checkoutOverlay.classList.add('visible');
+    document.body.classList.add('no-scroll');
+  }
+
+  function closeCheckoutModal() {
+    if (!checkoutOverlay) return;
+    checkoutOverlay.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
+  }
+
+  if (checkoutOverlay) {
+    checkoutClose.addEventListener('click', closeCheckoutModal);
+    checkoutOverlay.addEventListener('click', (e) => {
+      if (e.target === checkoutOverlay) closeCheckoutModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && checkoutOverlay.classList.contains('visible')) closeCheckoutModal();
+    });
+
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameInput = checkoutForm.querySelector('input[type="text"]');
+      checkoutSuccessName.textContent = nameInput && nameInput.value ? nameInput.value.split(' ')[0] : 'there';
+      checkoutFormView.classList.add('hidden-card');
+      checkoutSuccessView.classList.remove('hidden-card');
+      saveCart([]);
+      renderCart();
+      setTimeout(closeCheckoutModal, 2600);
+    });
+  }
+
+  renderCart();
+}
+
+// ===== Subscription plans (special-offers page only) =====
+const subscribeOverlay = document.getElementById('subscribeModalOverlay');
+if (subscribeOverlay) {
+  const subscribeClose = document.getElementById('subscribeModalClose');
+  const subscribeForm = document.getElementById('subscribeForm');
+  const subscribeTitle = document.getElementById('subscribeModalTitle');
+  const subscribeMeta = document.getElementById('subscribePlanMeta');
+  const subscribeFormView = document.getElementById('subscribeFormView');
+  const subscribeSuccessView = document.getElementById('subscribeSuccessView');
+  const subscribeSuccessName = document.getElementById('subscribeSuccessName');
+  const subscribeSuccessPlan = document.getElementById('subscribeSuccessPlan');
+  const SUBSCRIPTION_KEY = 'beanBoutiqueSubscription';
+
+  let activePlanId = null;
+  let activePlanName = '';
+
+  function getSubscription() {
+    try { return JSON.parse(localStorage.getItem(SUBSCRIPTION_KEY)); } catch (err) { return null; }
+  }
+  function saveSubscription(sub) {
+    try { localStorage.setItem(SUBSCRIPTION_KEY, JSON.stringify(sub)); } catch (err) { /* storage unavailable */ }
+  }
+
+  function refreshPlanButtons() {
+    const sub = getSubscription();
+    document.querySelectorAll('.plan-card[data-plan-id]').forEach((card) => {
+      const btn = card.querySelector('.choose-plan-btn');
+      if (!btn) return;
+      if (sub && sub.planId === card.dataset.planId) {
+        btn.textContent = 'Current Plan ✓';
+        btn.classList.add('current-plan');
+      } else {
+        btn.textContent = sub ? 'Switch to This Plan' : 'Choose This Plan';
+        btn.classList.remove('current-plan');
+      }
+    });
+  }
+
+  function openSubscribeModal(btn) {
+    const card = btn.closest('.plan-card');
+    if (!card) return;
+    activePlanId = card.dataset.planId;
+    activePlanName = card.dataset.planName;
+    subscribeTitle.textContent = `Subscribe: ${activePlanName}`;
+    subscribeMeta.textContent = card.dataset.planFrequency || '';
+    subscribeForm.reset();
+    subscribeFormView.classList.remove('hidden-card');
+    subscribeSuccessView.classList.add('hidden-card');
+    subscribeOverlay.classList.add('visible');
+    document.body.classList.add('no-scroll');
+  }
+
+  function closeSubscribeModal() {
+    subscribeOverlay.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.choose-plan-btn');
+    if (btn && !btn.classList.contains('current-plan')) openSubscribeModal(btn);
+  });
+
+  subscribeClose.addEventListener('click', closeSubscribeModal);
+  subscribeOverlay.addEventListener('click', (e) => {
+    if (e.target === subscribeOverlay) closeSubscribeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && subscribeOverlay.classList.contains('visible')) closeSubscribeModal();
+  });
+
+  subscribeForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameInput = subscribeForm.querySelector('input[type="text"]');
+    subscribeSuccessName.textContent = nameInput && nameInput.value ? nameInput.value.split(' ')[0] : 'there';
+    subscribeSuccessPlan.textContent = activePlanName;
+    subscribeFormView.classList.add('hidden-card');
+    subscribeSuccessView.classList.remove('hidden-card');
+
+    saveSubscription({ planId: activePlanId, planName: activePlanName });
+    refreshPlanButtons();
+
+    setTimeout(closeSubscribeModal, 2600);
+  });
+
+  refreshPlanButtons();
+}
+
+// ===== Interactive map pin (homepage only) =====
+const mapPin = document.getElementById('mapPin');
+const mapTooltip = document.getElementById('mapTooltip');
+if (mapPin && mapTooltip) {
+  mapPin.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = mapTooltip.classList.toggle('visible');
+    mapPin.setAttribute('aria-expanded', String(isVisible));
+  });
+  document.addEventListener('click', (e) => {
+    if (!mapPin.contains(e.target) && !mapTooltip.contains(e.target)) {
+      mapTooltip.classList.remove('visible');
+      mapPin.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      mapTooltip.classList.remove('visible');
+      mapPin.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+// ===== Cookie / privacy consent banner (every page) =====
+const cookieBanner = document.getElementById('cookieBanner');
+if (cookieBanner) {
+  const COOKIE_KEY = 'beanBoutiqueCookieChoice';
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieEssential = document.getElementById('cookieEssential');
+  const cookieDetailsToggle = document.getElementById('cookieDetailsToggle');
+  const cookieDetails = document.getElementById('cookieDetails');
+
+  function getCookieChoice() {
+    try { return localStorage.getItem(COOKIE_KEY); } catch (err) { return null; }
+  }
+  function setCookieChoice(value) {
+    try { localStorage.setItem(COOKIE_KEY, value); } catch (err) { /* storage unavailable */ }
+  }
+
+  // Don't compete with the welcome-discount modal for attention: if it's
+  // currently open, wait for it to close (via window.__maybeShowCookieBanner,
+  // called from the modal's closeModal) rather than showing both at once.
+  window.__maybeShowCookieBanner = () => {
+    if (getCookieChoice()) return;
+    const discountModal = document.getElementById('modalOverlay');
+    if (discountModal && discountModal.classList.contains('visible')) return;
+    cookieBanner.classList.add('visible');
+  };
+
+  setTimeout(() => window.__maybeShowCookieBanner(), 2200);
+
+  function dismissCookieBanner(choice) {
+    setCookieChoice(choice);
+    cookieBanner.classList.remove('visible');
+  }
+
+  cookieAccept.addEventListener('click', () => dismissCookieBanner('all'));
+  cookieEssential.addEventListener('click', () => dismissCookieBanner('essential'));
+  cookieDetailsToggle.addEventListener('click', () => {
+    const isVisible = cookieDetails.classList.toggle('visible');
+    cookieDetailsToggle.textContent = isVisible ? 'Hide details' : 'What do you store?';
+  });
+}
+
+// ===== Star rating widget (coffee selection page only) =====
+const ratingWidgets = document.querySelectorAll('.rating-widget');
+if (ratingWidgets.length) {
+  const RATINGS_KEY = 'beanBoutiqueRatings';
+
+  function getStoredRatings() {
+    try { return JSON.parse(localStorage.getItem(RATINGS_KEY)) || {}; } catch (err) { return {}; }
+  }
+  function saveStoredRatings(ratings) {
+    try { localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings)); } catch (err) { /* storage unavailable */ }
+  }
+
+  function setFilledStars(starsWrap, value) {
+    starsWrap.className = starsWrap.className.replace(/\bfilled-\d\b/, '').trim();
+    starsWrap.classList.add(`filled-${Math.round(value)}`);
+  }
+
+  ratingWidgets.forEach((widget) => {
+    const starsWrap = widget.querySelector('.rating-stars');
+    const summary = widget.querySelector('.rating-summary');
+    const card = widget.closest('.coffee-card');
+    const coffeeId = card ? card.dataset.cartId : null;
+    const coffeeName = card ? card.dataset.cartName : 'this coffee';
+    let avg = parseFloat(widget.dataset.ratingAvg) || 0;
+    let count = parseInt(widget.dataset.ratingCount, 10) || 0;
+
+    const storedRatings = getStoredRatings();
+    if (coffeeId && storedRatings[coffeeId]) {
+      setFilledStars(starsWrap, storedRatings[coffeeId]);
+      starsWrap.classList.add('rated');
+      summary.textContent = `You rated this ${storedRatings[coffeeId]}★`;
+    } else {
+      setFilledStars(starsWrap, avg);
+    }
+
+    starsWrap.querySelectorAll('.rating-star').forEach((star) => {
+      star.addEventListener('click', () => {
+        if (starsWrap.classList.contains('rated')) return;
+        const value = parseInt(star.dataset.value, 10);
+        count += 1;
+        avg = (avg * (count - 1) + value) / count;
+        setFilledStars(starsWrap, value);
+        starsWrap.classList.add('rated');
+        summary.textContent = `You rated this ${value}★`;
+
+        const ratings = getStoredRatings();
+        if (coffeeId) {
+          ratings[coffeeId] = value;
+          saveStoredRatings(ratings);
+        }
+        showToast(`Thanks for rating ${coffeeName} ${value}★!`);
+      });
+    });
+  });
+}
