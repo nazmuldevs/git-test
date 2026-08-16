@@ -166,3 +166,101 @@ if (modalOverlay) {
     setTimeout(closeModal, 2200);
   });
 }
+
+// ===== Event registration modal (events page only) =====
+const registerOverlay = document.getElementById('registerModalOverlay');
+if (registerOverlay) {
+  const registerClose = document.getElementById('registerModalClose');
+  const registerForm = document.getElementById('registerForm');
+  const registerTitle = document.getElementById('registerModalTitle');
+  const registerMeta = document.getElementById('registerEventMeta');
+  const registerFormView = document.getElementById('registerFormView');
+  const registerSuccessView = document.getElementById('registerSuccessView');
+  const successName = document.getElementById('successName');
+  const successEvent = document.getElementById('successEvent');
+  const REGISTER_KEY = 'beanBoutiqueRegisteredEvents';
+
+  let activeEventId = null;
+  let activeEventName = '';
+
+  function getRegisteredIds() {
+    try { return JSON.parse(localStorage.getItem(REGISTER_KEY)) || []; } catch (err) { return []; }
+  }
+  function saveRegisteredIds(ids) {
+    try { localStorage.setItem(REGISTER_KEY, JSON.stringify(ids)); } catch (err) { /* storage unavailable */ }
+  }
+  function markCardRegistered(card) {
+    const btn = card.querySelector('.register-btn');
+    if (btn) {
+      btn.textContent = "You're Registered ✓";
+      btn.disabled = true;
+      btn.classList.add('registered');
+    }
+  }
+
+  getRegisteredIds().forEach((id) => {
+    const card = document.querySelector(`.session-card[data-event-id="${id}"]`);
+    if (card) markCardRegistered(card);
+  });
+
+  function openRegisterModal(btn) {
+    const card = btn.closest('.session-card');
+    if (!card) return;
+    activeEventId = card.dataset.eventId;
+    activeEventName = card.dataset.eventName;
+    registerTitle.textContent = `Register: ${activeEventName}`;
+    registerMeta.textContent = `${card.dataset.eventWhen} · ${card.dataset.eventLocation}`;
+    registerForm.reset();
+    registerFormView.classList.remove('hidden-card');
+    registerSuccessView.classList.add('hidden-card');
+    registerOverlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeRegisterModal() {
+    registerOverlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.register-btn');
+    if (btn && !btn.disabled) openRegisterModal(btn);
+  });
+
+  registerClose.addEventListener('click', closeRegisterModal);
+  registerOverlay.addEventListener('click', (e) => {
+    if (e.target === registerOverlay) closeRegisterModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && registerOverlay.classList.contains('visible')) closeRegisterModal();
+  });
+
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameInput = registerForm.querySelector('input[type="text"]');
+    successName.textContent = nameInput && nameInput.value ? nameInput.value.split(' ')[0] : 'there';
+    successEvent.textContent = activeEventName;
+    registerFormView.classList.add('hidden-card');
+    registerSuccessView.classList.remove('hidden-card');
+
+    const ids = getRegisteredIds();
+    if (activeEventId && !ids.includes(activeEventId)) {
+      ids.push(activeEventId);
+      saveRegisteredIds(ids);
+    }
+    const card = document.querySelector(`.session-card[data-event-id="${activeEventId}"]`);
+    if (card) {
+      markCardRegistered(card);
+      const leftText = card.querySelector('.capacity-left-text');
+      const fill = card.querySelector('.capacity-bar-fill');
+      if (leftText && /^\d+ of \d+$/.test(leftText.textContent)) {
+        const [taken, total] = leftText.textContent.split(' of ').map(Number);
+        const newTaken = Math.min(taken + 1, total);
+        leftText.textContent = `${newTaken} of ${total}`;
+        if (fill) fill.style.width = `${(newTaken / total) * 100}%`;
+      }
+    }
+
+    setTimeout(closeRegisterModal, 2400);
+  });
+}

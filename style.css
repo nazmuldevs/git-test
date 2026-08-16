@@ -448,7 +448,7 @@ section { padding: 88px 24px; }
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .coffee-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-.coffee-card.hidden-card { display: none; }
+.hidden-card { display: none; }
 
 .coffee-card-top {
   display: flex;
@@ -475,6 +475,68 @@ section { padding: 88px 24px; }
 .category-badge.machine { background: #e3d3e6; color: #6b3f74; }
 .category-badge.manual { background: #d6e3d0; color: #4a6b3d; }
 .category-badge.accessory { background: #d3e0e6; color: #3f6274; }
+.category-badge.tasting { background: #f0dcae; color: #8a5a13; }
+.category-badge.workshop { background: #d6e3d0; color: #4a6b3d; }
+.category-badge.community { background: #e3d3e6; color: #6b3f74; }
+.category-badge.roaster { background: #d3e0e6; color: #3f6274; }
+
+/* ===== Events & workshops catalogue ===== */
+.session-card .equipment-tagline { margin-bottom: 16px; }
+
+.capacity-meter { margin-bottom: 16px; }
+.capacity-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cream-dark);
+  overflow: hidden;
+}
+.capacity-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.register-btn:disabled,
+.register-btn.registered {
+  background: var(--cream-dark);
+  color: var(--text-soft);
+  box-shadow: none;
+  cursor: default;
+}
+.register-btn:disabled:hover,
+.register-btn.registered:hover {
+  background: var(--cream-dark);
+  transform: none;
+  box-shadow: none;
+}
+
+.events-cta { text-align: center; margin-top: 44px; }
+
+.catalogue-note {
+  margin-top: 40px;
+  text-align: center;
+  background: var(--cream-dark);
+  border-radius: var(--radius);
+  padding: 20px;
+  color: var(--text-soft);
+}
+.catalogue-note a { color: var(--accent-dark); font-weight: 600; }
+.catalogue-note a:hover { text-decoration: underline; }
+
+/* ===== Registration modal ===== */
+.modal select {
+  padding: 13px 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 248, 240, 0.2);
+  background: rgba(255, 248, 240, 0.08);
+  color: var(--cream);
+  font: inherit;
+}
+.modal select:focus { outline: none; border-color: var(--accent); }
+.modal select option { color: var(--text); }
 
 /* ===== Equipment catalogue ===== */
 .equipment-tagline { font-size: 0.85rem; color: var(--text-soft); margin-bottom: 14px; }
