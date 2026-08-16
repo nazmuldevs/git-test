@@ -57,6 +57,11 @@
 
   <!-- ===== Catalogue ===== -->
   <section class="catalogue">
+    <div class="catalogue-search">
+      <svg class="catalogue-search-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="text" class="catalogue-search-input" id="equipmentSearch" placeholder="Search machines, brewers, accessories…" aria-label="Search brewing equipment">
+    </div>
+
     <div class="filter-tabs" role="tablist" aria-label="Filter brewing equipment">
       <button class="filter-tab active" data-filter="all">All Equipment</button>
       <button class="filter-tab" data-filter="machine">Machines</button>
@@ -74,7 +79,7 @@
         <p class="equipment-tagline">Best for: espresso, lattes &amp; cappuccinos at home</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Advanced</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 85%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-85"></span></div>
         </div>
         <p class="coffee-desc">A 15-bar pump with a built-in steam wand for pulling café-quality shots and texturing milk. Manual dosing and tamping give you full control once you've learned the machine.</p>
         <div class="usage-tips">
@@ -99,7 +104,7 @@
         <p class="equipment-tagline">Best for: strong, espresso-style coffee without the machine</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Intermediate</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 50%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-50"></span></div>
         </div>
         <p class="coffee-desc">Aluminium stovetop brewer that pushes steam pressure through the grounds for a bold, concentrated cup. A classic that lasts decades with basic care.</p>
         <div class="usage-tips">
@@ -124,7 +129,7 @@
         <p class="equipment-tagline">Best for: clean, bright single cups</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 15%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-15"></span></div>
         </div>
         <p class="coffee-desc">A cone-shaped dripper that lets you control every part of the pour. Highlights the delicate, floral notes in light-roast and single-origin coffees.</p>
         <div class="usage-tips">
@@ -149,7 +154,7 @@
         <p class="equipment-tagline">Best for: full-bodied, rich coffee</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 15%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-15"></span></div>
         </div>
         <p class="coffee-desc">Immersion brewing with a mesh plunger for a heavier body and more oils in the cup. Forgiving to brew and easy to clean — a great first brewer.</p>
         <div class="usage-tips">
@@ -174,7 +179,7 @@
         <p class="equipment-tagline">Best for: travel and fast, smooth cups</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 20%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-20"></span></div>
         </div>
         <p class="coffee-desc">A lightweight, nearly indestructible brewer that uses gentle pressure for a smooth, low-acid cup in under two minutes. Packs flat for travel.</p>
         <div class="usage-tips">
@@ -199,7 +204,7 @@
         <p class="equipment-tagline">Best for: tea-like clarity and entertaining</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Intermediate</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 55%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-55"></span></div>
         </div>
         <p class="coffee-desc">An hourglass carafe with thick, proprietary filters that produce an exceptionally clean, sediment-free cup. Doubles as a table centrepiece.</p>
         <div class="usage-tips">
@@ -224,7 +229,7 @@
         <p class="equipment-tagline">Best for: smooth, low-acid iced coffee</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 15%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-15"></span></div>
         </div>
         <p class="coffee-desc">A carafe with a removable steeping filter — no heat required. Long, slow extraction pulls sweetness forward while leaving bitterness behind.</p>
         <div class="usage-tips">
@@ -249,7 +254,7 @@
         <p class="equipment-tagline">Best for: quiet mornings and travel</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 20%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-20"></span></div>
         </div>
         <p class="coffee-desc">A compact hand-crank grinder with ceramic burrs for a consistent grind, no outlet or cord required. Adjustable for everything from espresso to French press.</p>
         <div class="usage-tips">
@@ -274,7 +279,7 @@
         <p class="equipment-tagline">Best for: households brewing daily</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 25%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-25"></span></div>
         </div>
         <p class="coffee-desc">A stepped-dial burr grinder that stores your favourite settings for pour-over, drip and espresso, so every brewer in the house gets the right grind fast.</p>
         <div class="usage-tips">
@@ -299,7 +304,7 @@
         <p class="equipment-tagline">Best for: dialing in a consistent brew</p>
         <div class="skill-meter">
           <div class="roast-meter-label"><span>Skill Level</span><span>Beginner</span></div>
-          <div class="skill-bar"><span class="skill-bar-marker" style="left: 20%;"></span></div>
+          <div class="skill-bar"><span class="skill-bar-marker meter-pos-20"></span></div>
         </div>
         <p class="coffee-desc">A slim scale with a built-in timer for measuring coffee-to-water ratio down to the gram — the fastest upgrade to a noticeably better cup.</p>
         <div class="usage-tips">
@@ -317,6 +322,7 @@
       </article>
 
     </div>
+    <p class="catalogue-empty" id="equipmentSearchEmpty">No equipment matches your search. Try a different term or clear the filters.</p>
   </section>
 
   <!-- ===== Newsletter ===== -->

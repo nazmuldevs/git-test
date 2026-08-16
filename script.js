@@ -157,7 +157,8 @@ if (slideshow) {
 
   function goToSlide(index) {
     currentSlide = (index + slides.length) % slides.length;
-    slidesTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    slidesTrack.className = slidesTrack.className.replace(/\bslide-pos-\d+\b/, '').trim();
+    slidesTrack.classList.add(`slide-pos-${currentSlide}`);
     dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
   }
 
@@ -180,10 +181,43 @@ if (slideshow) {
   startAutoplay();
 }
 
-// ===== Coffee catalogue filter (coffee selection page only) =====
+// ===== Catalogue filter tabs + animated text search =====
+// (coffee-selection, brewing-equipment and events pages all share this markup)
 const filterTabs = document.querySelectorAll('.filter-tab');
-if (filterTabs.length) {
+const catalogueSearchInput = document.querySelector('.catalogue-search-input');
+if (filterTabs.length || catalogueSearchInput) {
   const coffeeCards = document.querySelectorAll('.coffee-card');
+  const catalogueEmptyState = document.querySelector('.catalogue-empty');
+
+  const cardHideTimers = new WeakMap();
+
+  function animateCardOut(card) {
+    if (card.classList.contains('card-exit')) return;
+    card.classList.add('card-exit');
+    clearTimeout(cardHideTimers.get(card));
+    cardHideTimers.set(card, setTimeout(() => card.classList.add('card-gone'), 260));
+  }
+
+  function animateCardIn(card) {
+    clearTimeout(cardHideTimers.get(card));
+    if (!card.classList.contains('card-exit') && !card.classList.contains('card-gone')) return;
+    card.classList.remove('card-gone');
+    void card.offsetWidth; // force reflow so the transition below actually plays
+    card.classList.remove('card-exit');
+  }
+
+  function updateCatalogueVisibility() {
+    const query = catalogueSearchInput ? catalogueSearchInput.value.trim().toLowerCase() : '';
+    let anyVisible = false;
+    coffeeCards.forEach((card) => {
+      const matchesSearch = query === '' || card.textContent.toLowerCase().includes(query);
+      const matchesCategory = !card.classList.contains('hidden-card');
+      if (matchesSearch) animateCardIn(card); else animateCardOut(card);
+      if (matchesSearch && matchesCategory) anyVisible = true;
+    });
+    if (catalogueEmptyState) catalogueEmptyState.classList.toggle('visible', !anyVisible);
+  }
+
   filterTabs.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterTabs.forEach((b) => b.classList.remove('active'));
@@ -193,8 +227,13 @@ if (filterTabs.length) {
         const match = filter === 'all' || card.dataset.category === filter;
         card.classList.toggle('hidden-card', !match);
       });
+      updateCatalogueVisibility();
     });
   });
+
+  if (catalogueSearchInput) {
+    catalogueSearchInput.addEventListener('input', updateCatalogueVisibility);
+  }
 }
 
 // ===== Newsletter form (inline, in-page) =====
@@ -218,12 +257,12 @@ const STORAGE_KEY = 'beanBoutiqueDiscountSeen';
 if (modalOverlay) {
   function openModal() {
     modalOverlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
   }
 
   function closeModal() {
     modalOverlay.classList.remove('visible');
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
     try { localStorage.setItem(STORAGE_KEY, 'true'); } catch (err) { /* storage unavailable */ }
     if (window.__maybeShowCookieBanner) window.__maybeShowCookieBanner();
   }
@@ -308,12 +347,12 @@ if (registerOverlay) {
     registerFormView.classList.remove('hidden-card');
     registerSuccessView.classList.add('hidden-card');
     registerOverlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
   }
 
   function closeRegisterModal() {
     registerOverlay.classList.remove('visible');
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
   }
 
   document.addEventListener('click', (e) => {
@@ -331,18 +370,37 @@ if (registerOverlay) {
 
   registerForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nameInput = registerForm.querySelector('input[type="text"]');
-    successName.textContent = nameInput && nameInput.value ? nameInput.value.split(' ')[0] : 'there';
+    const firstNameInput = document.getElementById('registerFirstName');
+    const lastNameInput = document.getElementById('registerLastName');
+    const emailInput = document.getElementById('registerEmail');
+    const guestsSelect = document.getElementById('registerGuests');
+    const firstName = firstNameInput ? firstNameInput.value.trim() : '';
+    const lastName = lastNameInput ? lastNameInput.value.trim() : '';
+
+    successName.textContent = firstName || 'there';
     successEvent.textContent = activeEventName;
     registerFormView.classList.add('hidden-card');
     registerSuccessView.classList.remove('hidden-card');
+
+    // Submit "through email" per the registration requirement: since this
+    // static prototype has no backend, hand off to the visitor's own mail
+    // client with the registration details pre-filled via a mailto: link.
+    const card = document.querySelector(`.session-card[data-event-id="${activeEventId}"]`);
+    const eventMeta = card ? `${card.dataset.eventWhen} · ${card.dataset.eventLocation}` : '';
+    const guestLabel = guestsSelect ? guestsSelect.options[guestsSelect.selectedIndex].text : '';
+    const mailSubject = encodeURIComponent(`Event Registration: ${activeEventName}`);
+    const mailBody = encodeURIComponent(
+      `First name: ${firstName}\nLast name: ${lastName}\nEmail: ${emailInput ? emailInput.value.trim() : ''}\nGuests: ${guestLabel}\nEvent: ${activeEventName}\nWhen & where: ${eventMeta}`
+    );
+    const mailLink = document.createElement('a');
+    mailLink.href = `mailto:hello@beanboutique.example?subject=${mailSubject}&body=${mailBody}`;
+    mailLink.click();
 
     const ids = getRegisteredIds();
     if (activeEventId && !ids.includes(activeEventId)) {
       ids.push(activeEventId);
       saveRegisteredIds(ids);
     }
-    const card = document.querySelector(`.session-card[data-event-id="${activeEventId}"]`);
     if (card) {
       markCardRegistered(card);
       const leftText = card.querySelector('.capacity-left-text');
@@ -351,7 +409,10 @@ if (registerOverlay) {
         const [taken, total] = leftText.textContent.split(' of ').map(Number);
         const newTaken = Math.min(taken + 1, total);
         leftText.textContent = `${newTaken} of ${total}`;
-        if (fill) fill.style.width = `${(newTaken / total) * 100}%`;
+        if (fill) {
+          const pct = Math.round((newTaken / total) * 100);
+          fill.className = fill.className.replace(/\bmeter-fill-\d+\b/, `meter-fill-${pct}`);
+        }
       }
     }
 
@@ -466,13 +527,13 @@ if (cartPageContent) {
     checkoutFormView.classList.remove('hidden-card');
     checkoutSuccessView.classList.add('hidden-card');
     checkoutOverlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
   }
 
   function closeCheckoutModal() {
     if (!checkoutOverlay) return;
     checkoutOverlay.classList.remove('visible');
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
   }
 
   if (checkoutOverlay) {
@@ -548,12 +609,12 @@ if (subscribeOverlay) {
     subscribeFormView.classList.remove('hidden-card');
     subscribeSuccessView.classList.add('hidden-card');
     subscribeOverlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
   }
 
   function closeSubscribeModal() {
     subscribeOverlay.classList.remove('visible');
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
   }
 
   document.addEventListener('click', (e) => {
@@ -647,5 +708,61 @@ if (cookieBanner) {
   cookieDetailsToggle.addEventListener('click', () => {
     const isVisible = cookieDetails.classList.toggle('visible');
     cookieDetailsToggle.textContent = isVisible ? 'Hide details' : 'What do you store?';
+  });
+}
+
+// ===== Star rating widget (coffee selection page only) =====
+const ratingWidgets = document.querySelectorAll('.rating-widget');
+if (ratingWidgets.length) {
+  const RATINGS_KEY = 'beanBoutiqueRatings';
+
+  function getStoredRatings() {
+    try { return JSON.parse(localStorage.getItem(RATINGS_KEY)) || {}; } catch (err) { return {}; }
+  }
+  function saveStoredRatings(ratings) {
+    try { localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings)); } catch (err) { /* storage unavailable */ }
+  }
+
+  function setFilledStars(starsWrap, value) {
+    starsWrap.className = starsWrap.className.replace(/\bfilled-\d\b/, '').trim();
+    starsWrap.classList.add(`filled-${Math.round(value)}`);
+  }
+
+  ratingWidgets.forEach((widget) => {
+    const starsWrap = widget.querySelector('.rating-stars');
+    const summary = widget.querySelector('.rating-summary');
+    const card = widget.closest('.coffee-card');
+    const coffeeId = card ? card.dataset.cartId : null;
+    const coffeeName = card ? card.dataset.cartName : 'this coffee';
+    let avg = parseFloat(widget.dataset.ratingAvg) || 0;
+    let count = parseInt(widget.dataset.ratingCount, 10) || 0;
+
+    const storedRatings = getStoredRatings();
+    if (coffeeId && storedRatings[coffeeId]) {
+      setFilledStars(starsWrap, storedRatings[coffeeId]);
+      starsWrap.classList.add('rated');
+      summary.textContent = `You rated this ${storedRatings[coffeeId]}★`;
+    } else {
+      setFilledStars(starsWrap, avg);
+    }
+
+    starsWrap.querySelectorAll('.rating-star').forEach((star) => {
+      star.addEventListener('click', () => {
+        if (starsWrap.classList.contains('rated')) return;
+        const value = parseInt(star.dataset.value, 10);
+        count += 1;
+        avg = (avg * (count - 1) + value) / count;
+        setFilledStars(starsWrap, value);
+        starsWrap.classList.add('rated');
+        summary.textContent = `You rated this ${value}★`;
+
+        const ratings = getStoredRatings();
+        if (coffeeId) {
+          ratings[coffeeId] = value;
+          saveStoredRatings(ratings);
+        }
+        showToast(`Thanks for rating ${coffeeName} ${value}★!`);
+      });
+    });
   });
 }
