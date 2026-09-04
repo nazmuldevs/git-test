@@ -40,6 +40,7 @@
 
   /* Type */
   --font-body: 'Manrope', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
 }
 
 /* ---------- Reset ---------- */
@@ -66,8 +67,9 @@ input, select, textarea { font-family: inherit; }
 
 /* ---------- Typography ---------- */
 h1, h2, h3, h4 { margin: 0 0 .5em; font-weight: 750; letter-spacing: -0.01em; }
-h1 { font-size: 52px; line-height: 1.08; font-weight: 800; }
-h2 { font-size: 38px; line-height: 1.15; font-weight: 750; }
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.02em; }
+h1 { font-size: 52px; line-height: 1.08; font-weight: 700; }
+h2 { font-size: 38px; line-height: 1.15; font-weight: 700; }
 h3 { font-size: 23px; line-height: 1.3; font-weight: 700; }
 p { margin: 0 0 1em; color: var(--text-muted); }
 .eyebrow {
@@ -234,6 +236,29 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
 .hero-trust { display: flex; align-items: center; gap: 12px; margin-top: 28px; font-size: 13.5px; color: var(--text-muted); }
 .stars { color: var(--gold); letter-spacing: 2px; }
+
+/* Hero headline effects: kinetic word-swap + highlighter underline */
+.cycle-word-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.cycle-word-inner { display: inline-block; color: var(--blue-primary); }
+.cycle-word-inner.cycle-out { animation: cycleOut .28s cubic-bezier(.4,0,.7,.4) forwards; }
+.cycle-word-inner.cycle-in { animation: cycleIn .4s cubic-bezier(.2,.8,.3,1) forwards; }
+@keyframes cycleOut { to { opacity: 0; transform: translateY(14px) rotate(2deg); } }
+@keyframes cycleIn { from { opacity: 0; transform: translateY(-14px) rotate(-2deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
+
+.highlight-wrap { position: relative; z-index: 0; display: inline-block; white-space: nowrap; }
+.highlight-mark { position: absolute; left: -3%; top: 4%; width: 106%; height: 92%; z-index: -1; overflow: visible; pointer-events: none; }
+.highlight-mark path {
+  fill: none; stroke: var(--gold); stroke-width: 16; stroke-linecap: round; stroke-linejoin: round;
+  opacity: .6; mix-blend-mode: multiply;
+  stroke-dasharray: 420; stroke-dashoffset: 420;
+}
+.highlight-mark.draw path { animation: drawHighlight 1s cubic-bezier(.3,.8,.3,1) .5s forwards; }
+@keyframes drawHighlight { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle-word-inner.cycle-out, .cycle-word-inner.cycle-in { animation: none; }
+  .highlight-mark.draw path { animation: none; stroke-dashoffset: 0; }
+}
 
 /* Quote calculator card */
 .quote-card {

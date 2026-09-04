@@ -2,6 +2,29 @@
 (function () {
   'use strict';
 
+  /* ---------- Hero headline: kinetic word-swap ---------- */
+  var cycleEl = document.getElementById('heroCycleWord');
+  if (cycleEl) {
+    var cycleWords = ['assignments', 'essays', 'dissertations', 'coursework', 'deadlines'];
+    var cycleIdx = 0;
+    var cycleTimer = window.setInterval(function () {
+      cycleIdx = (cycleIdx + 1) % cycleWords.length;
+      cycleEl.classList.remove('cycle-in');
+      cycleEl.classList.add('cycle-out');
+      window.setTimeout(function () {
+        cycleEl.textContent = cycleWords[cycleIdx];
+        cycleEl.classList.remove('cycle-out');
+        cycleEl.classList.add('cycle-in');
+      }, 280);
+    }, 2400);
+  }
+
+  /* ---------- Hero headline: highlighter-swipe underline ---------- */
+  var highlightSvg = document.getElementById('heroHighlightSvg');
+  if (highlightSvg) {
+    window.setTimeout(function () { highlightSvg.classList.add('draw'); }, 300);
+  }
+
   /* ---------- Mobile nav drawer ---------- */
   var navToggle = document.querySelector('.nav-toggle');
   var drawer = document.querySelector('.mobile-drawer');
