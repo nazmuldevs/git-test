@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact AcaDAMN | Academic Support for UK Students</title>
+<meta name="description" content="Get in touch with AcaDAMN — send your requirements, ask a question, or reach our support team by email, WhatsApp or live chat.">
+<link rel="canonical" href="/contact.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;750;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="promo-bar">New student? Get 10% off your first project with AcaDAMN — <a href="pricing.html">see pricing</a></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="AcaDAMN home"><img src="assets/logo.svg" alt="AcaDAMN — We Write, You Succeed"></a>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="index.html#subjects" class="nav-link">Subjects</a></li>
+        <li class="nav-item"><a href="index.html#experts" class="nav-link">Experts</a></li>
+        <li class="nav-item"><a href="index.html#resources" class="nav-link">Resources</a></li>
+        <li class="nav-item"><a href="index.html#tools" class="nav-link">Tools</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn search-icon" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      <a href="contact.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <a href="pricing.html" class="btn btn-primary btn-sm">Get a Quote</a>
+      <button class="icon-btn nav-toggle" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer-head">
+    <img src="assets/logo.svg" alt="AcaDAMN" style="height:34px">
+    <button class="icon-btn mobile-drawer-close" aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <nav>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="index.html#subjects" class="nav-link">Subjects</a>
+    <a href="index.html#experts" class="nav-link">Experts</a>
+    <a href="index.html#resources" class="nav-link">Resources</a>
+    <a href="index.html#tools" class="nav-link">Tools</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="cta-row">
+      <a href="contact.html" class="btn btn-secondary btn-block">Sign In</a>
+      <a href="pricing.html" class="btn btn-primary btn-block">Get a Quote</a>
+    </div>
+  </nav>
+</div>
+
+<main>
+<div class="container breadcrumbs"><a href="index.html">Home</a> / Contact</div>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1>Talk to AcaDAMN</h1>
+    <p class="lede">Send your requirements or ask a question — our support team typically responds quickly during support hours.</p>
+  </div>
+</section>
+
+<section class="section bg-white">
+  <div class="container" style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:start;">
+    <div class="card" style="padding:32px;">
+      <h2 style="margin-top:0;">Send a message</h2>
+      <form onsubmit="event.preventDefault(); this.reset(); document.getElementById('contactSent').hidden=false;">
+        <div class="field" style="margin-bottom:16px;"><label for="c-name" style="display:block;font-weight:700;font-size:13px;margin-bottom:6px;">Name</label><input id="c-name" required style="width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;"></div>
+        <div class="field" style="margin-bottom:16px;"><label for="c-email" style="display:block;font-weight:700;font-size:13px;margin-bottom:6px;">Email</label><input id="c-email" type="email" required style="width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;"></div>
+        <div class="field" style="margin-bottom:16px;"><label for="c-subject" style="display:block;font-weight:700;font-size:13px;margin-bottom:6px;">Subject</label><input id="c-subject" style="width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;"></div>
+        <div class="field" style="margin-bottom:16px;"><label for="c-message" style="display:block;font-weight:700;font-size:13px;margin-bottom:6px;">Message</label><textarea id="c-message" rows="5" required style="width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;"></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+        <p id="contactSent" hidden style="margin-top:14px;color:var(--blue-primary);font-weight:700;font-size:14px;">Thanks — this is a demo form and isn't wired to a live inbox yet.</p>
+      </form>
+    </div>
+    <div>
+      <div class="card" style="padding:26px;margin-bottom:18px;">
+        <h3 style="margin-top:0;">Get in touch directly</h3>
+        <p style="font-size:14.5px;margin-bottom:14px;">Email: <a href="mailto:support@acadamn.example" style="color:var(--blue-primary);font-weight:700;">support@acadamn.example</a></p>
+        <p style="font-size:14.5px;margin-bottom:14px;">WhatsApp: <span style="color:var(--blue-primary);font-weight:700;">Available via floating chat</span></p>
+        <p style="font-size:14.5px;margin-bottom:0;">Support hours: Mon–Sun, 8am–11pm (UK time)</p>
+      </div>
+      <div class="card" style="padding:26px;">
+        <h3 style="margin-top:0;">Prefer a quote first?</h3>
+        <p style="font-size:14.5px;">Use our instant calculator to see an estimated price before you get in touch.</p>
+        <a href="pricing.html" class="btn btn-secondary btn-block">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-box"><img src="assets/logo.svg" alt="AcaDAMN"></div>
+        <p style="color:rgba(255,255,255,.7);font-size:14px;max-width:260px;">Academic support for UK students — subject specialists, free tools and honest guidance.</p>
+      </div>
+      <div><h4>Services</h4><ul><li><a href="services.html#assignment-help">Assignment Help</a></li><li><a href="services.html#essay-guidance">Essay Support</a></li><li><a href="services.html#dissertation-support">Dissertation Support</a></li><li><a href="services.html">Editing &amp; Proofreading</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="index.html#resources">Free Samples</a></li><li><a href="index.html#tools">Student Tools</a></li><li><a href="faq.html">FAQ</a></li><li><a href="index.html#subjects">Subjects</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li><li><a href="academic-integrity.html">Academic Integrity</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="contact.html">Email Support</a></li><li><a href="contact.html">WhatsApp</a></li><li><a href="contact.html">Live Chat</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> AcaDAMN. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="academic-integrity.html">Academic Integrity</a>
+        <a href="contact.html">Privacy Policy</a>
+        <a href="contact.html">Terms &amp; Conditions</a>
+        <a href="contact.html">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="floating-support">
+  <div class="floating-support-panel">
+    <a href="contact.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-9 8.35A8.5 8.5 0 013 12a8.5 8.5 0 018.5-8.5A8.38 8.38 0 0121 11.5z"/></svg>WhatsApp</a>
+    <a href="contact.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Live Chat</a>
+    <a href="contact.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>Email Us</a>
+  </div>
+  <button class="floating-toggle" aria-label="Open support options"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
+</div>
+<div class="mobile-sticky-bar">
+  <a href="pricing.html" class="btn btn-primary">Get Quote</a>
+  <a href="contact.html" class="btn btn-secondary">Chat</a>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
