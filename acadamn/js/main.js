@@ -92,7 +92,7 @@
   var quoteForm = document.getElementById('quoteCalculator');
   if (quoteForm) {
     var priceOut = quoteForm.querySelector('[data-quote-price]');
-    var baseRates = { assignment: 16, essay: 15, dissertation: 22, coursework: 17, research: 20, editing: 9 };
+    var baseRates = { assignment: 20, essay: 20, dissertation: 26, coursework: 22, research: 24, editing: 14 };
     var levelMultiplier = { undergraduate: 1, masters: 1.25, phd: 1.6 };
     var deadlineMultiplier = { standard: 1, week: 1.2, urgent: 1.5 };
 
@@ -101,10 +101,10 @@
       var level = quoteForm.level.value;
       var deadline = quoteForm.deadline.value;
       var words = parseInt(quoteForm.words.value, 10) || 1000;
-      var rate = baseRates[service] || 16;
+      var rate = baseRates[service] || 20;
       var lvl = levelMultiplier[level] || 1;
       var dl = deadlineMultiplier[deadline] || 1;
-      var estimate = Math.max(45, Math.round(((words / 250) * rate * lvl * dl) / 5) * 5);
+      var estimate = Math.max(15, Math.round(((words / 1000) * rate * lvl * dl) / 5) * 5);
       if (priceOut) priceOut.textContent = '£' + estimate.toLocaleString();
     }
     quoteForm.addEventListener('change', calculate);
@@ -175,8 +175,8 @@
     }
 
     var extraRates = { priority: 25, originality: 12, editing: 15, slides: 20, sources: 10 };
-    var planRates = { essential: 16, plus: 19, advanced: 24 };
-    var baseRates2 = { assignment: 16, essay: 15, dissertation: 22, coursework: 17, research: 20, editing: 9 };
+    var planRates = { essential: 20, plus: 24, advanced: 30 };
+    var baseRates2 = { assignment: 20, essay: 20, dissertation: 26, coursework: 22, research: 24, editing: 14 };
     var levelMultiplier2 = { undergraduate: 1, masters: 1.25, phd: 1.6 };
     var deadlineMultiplier2 = { standard: 1, week: 1.2, urgent: 1.5 };
 
@@ -187,10 +187,10 @@
       var deadline = document.getElementById('w-deadline').value;
       var selectedPlan = wizard.querySelector('.plan-select-card.selected');
       var planKey = selectedPlan ? selectedPlan.getAttribute('data-plan') : 'essential';
-      var rate = planRates[planKey] || baseRates2[service] || 16;
+      var rate = planRates[planKey] || baseRates2[service] || 20;
       var lvl = levelMultiplier2[level] || 1;
       var dl = deadlineMultiplier2[deadline] || 1;
-      var base = Math.round(((words / 250) * rate * lvl * dl));
+      var base = Math.round(((words / 1000) * rate * lvl * dl));
       var extrasTotal = 0;
       var extrasSelected = [];
       wizard.querySelectorAll('.extra-row input[type="checkbox"]:checked').forEach(function (cb) {

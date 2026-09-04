@@ -191,6 +191,8 @@ p { margin: 0 0 1em; color: var(--text-muted); }
   background: transparent; border: 1px solid transparent; color: var(--text-primary);
 }
 .icon-btn:hover { background: var(--blue-pale); color: var(--blue-primary); }
+.whatsapp-header-btn { background: #25D366; color: #fff; }
+.whatsapp-header-btn:hover { background: #1EBE5A; color: #fff; }
 .nav-toggle { display: none; }
 
 /* Mega menu */
