@@ -266,6 +266,29 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 .trust-item { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); font-size: 13.5px; font-weight: 600; }
 .trust-item svg { color: var(--blue-primary); }
 
+/* ---------- WhatsApp order banner ---------- */
+.whatsapp-banner {
+  display: flex; align-items: center; gap: 24px; justify-content: space-between;
+  background: var(--blue-pale); border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg); padding: 26px 32px; flex-wrap: wrap;
+}
+.whatsapp-banner .wa-left { display: flex; align-items: center; gap: 18px; }
+.whatsapp-banner .wa-icon {
+  width: 56px; height: 56px; border-radius: 50%; background: #25D366; color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(37,211,102,.35);
+}
+.whatsapp-banner h3 { margin: 0 0 4px; font-size: 19px; }
+.whatsapp-banner p { margin: 0; font-size: 14.5px; }
+.whatsapp-banner .btn-whatsapp {
+  background: #25D366; color: #fff; border-color: #25D366;
+}
+.whatsapp-banner .btn-whatsapp:hover { background: #1EBE5A; }
+@media (max-width: 720px) {
+  .whatsapp-banner { flex-direction: column; align-items: flex-start; text-align: left; }
+  .whatsapp-banner .btn-whatsapp { width: 100%; justify-content: center; }
+}
+
 /* ---------- Benefit / feature cards ---------- */
 .benefit-card { padding: 26px; }
 .benefit-card h3 { margin: 14px 0 8px; font-size: 18.5px; }
