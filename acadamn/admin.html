@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Prototype | AcaDAMN</title>
+<meta name="description" content="Internal admin dashboard prototype for AcaDAMN.">
+<link rel="canonical" href="https://acadamn.com/admin.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;750;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="demo-banner"><strong>Internal prototype:</strong> this admin view shows sample data only and is not connected to a live database. Not for public use.</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="AcaDAMN home"><img src="assets/logo.svg" alt="AcaDAMN — We Write, You Succeed"></a>
+    <span class="tag" style="margin-left:-8px;">Admin</span>
+    <div class="header-actions" style="margin-left:auto;">
+      <a href="index.html" class="btn btn-secondary btn-sm">Exit to Site</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="section bg-white" style="padding-top:32px;">
+  <div class="container dash-shell" data-tabgroup="admin">
+
+    <aside class="dash-sidebar">
+      <a href="#" class="active" data-tabtrigger="admin" data-target="a-orders"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>Orders</a>
+      <a href="#" data-tabtrigger="admin" data-target="a-customers"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="4"/><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/></svg>Customers</a>
+      <a href="#" data-tabtrigger="admin" data-target="a-experts"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4.5v9L12 20l-9-4.5v-9L12 2z"/></svg>Experts</a>
+      <a href="#" data-tabtrigger="admin" data-target="a-pricing"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>Pricing &amp; Promos</a>
+      <a href="#" data-tabtrigger="admin" data-target="a-content"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Content</a>
+      <a href="#" data-tabtrigger="admin" data-target="a-settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 010 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>Site Settings</a>
+    </aside>
+
+    <div>
+      <!-- Orders -->
+      <div class="dash-tab-panel active" data-panel-id="a-orders">
+        <h1 style="font-size:26px;">Orders</h1>
+        <div class="dash-stat-row">
+          <div class="card dash-stat-card"><div class="num">23</div><div class="cap">Active orders</div></div>
+          <div class="card dash-stat-card"><div class="num">4</div><div class="cap">Awaiting specialist match</div></div>
+          <div class="card dash-stat-card"><div class="num">£8,240</div><div class="cap">Revenue this month (demo)</div></div>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Reference</th><th>Customer</th><th>Service</th><th>Specialist</th><th>Deadline</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>AD-482913</td><td>Alex Morgan</td><td>Dissertation</td><td>Dr. A. Whitfield</td><td>12 Sep 2026</td><td><span class="status-pill in-progress">In Progress</span></td></tr>
+                <tr><td>AD-471820</td><td>Priya Shah</td><td>Essay</td><td>Dr. R. Osei</td><td>03 Sep 2026</td><td><span class="status-pill review">Awaiting Review</span></td></tr>
+                <tr><td>AD-460221</td><td>Tom Baker</td><td>Assignment</td><td>M. Iqbal, LLM</td><td>18 Aug 2026</td><td><span class="status-pill complete">Completed</span></td></tr>
+                <tr><td>AD-478102</td><td>Sara Khan</td><td>Coursework</td><td>Unassigned</td><td>20 Sep 2026</td><td><span class="status-pill pending">Awaiting Match</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers -->
+      <div class="dash-tab-panel" data-panel-id="a-customers">
+        <h1 style="font-size:26px;">Customers</h1>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Orders</th><th>Joined</th></tr></thead>
+              <tbody>
+                <tr><td>Alex Morgan</td><td>alex.morgan@example.com</td><td>5</td><td>Jan 2026</td></tr>
+                <tr><td>Priya Shah</td><td>priya.shah@example.com</td><td>2</td><td>Mar 2026</td></tr>
+                <tr><td>Tom Baker</td><td>tom.baker@example.com</td><td>1</td><td>Jun 2026</td></tr>
+                <tr><td>Sara Khan</td><td>sara.khan@example.com</td><td>3</td><td>Jul 2026</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experts -->
+      <div class="dash-tab-panel" data-panel-id="a-experts">
+        <h1 style="font-size:26px;">Experts</h1>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Name</th><th>Qualification</th><th>Subjects</th><th>Active orders</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Dr. A. Whitfield</td><td>PhD, Business</td><td>Business, Marketing, MBA</td><td>3</td><td><span class="status-pill complete">Active</span></td></tr>
+                <tr><td>Dr. R. Osei</td><td>PhD, Health Sciences</td><td>Nursing, Healthcare</td><td>2</td><td><span class="status-pill complete">Active</span></td></tr>
+                <tr><td>M. Iqbal, LLM</td><td>LLM, Law</td><td>Law, Criminology</td><td>1</td><td><span class="status-pill complete">Active</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="dash-tab-panel" data-panel-id="a-pricing">
+        <h1 style="font-size:26px;">Pricing &amp; Promo Codes</h1>
+        <div class="card" style="padding:22px;margin-bottom:20px;">
+          <h3 style="margin-top:0;">Base rates (£ per 250 words)</h3>
+          <div class="wizard-field-grid">
+            <div class="wizard-field"><label>Essential</label><input type="number" value="16"></div>
+            <div class="wizard-field"><label>Plus</label><input type="number" value="19"></div>
+            <div class="wizard-field"><label>Advanced</label><input type="number" value="24"></div>
+          </div>
+          <button class="btn btn-primary" disabled>Save Rates (Demo)</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Code</th><th>Discount</th><th>Uses</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>NEW10</td><td>10%</td><td>142</td><td><span class="status-pill complete">Active</span></td></tr>
+                <tr><td>SUMMER25</td><td>25%</td><td>38</td><td><span class="status-pill pending">Expired</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="dash-tab-panel" data-panel-id="a-content">
+        <h1 style="font-size:26px;">Content</h1>
+        <p style="margin-bottom:20px;">Manage the CMS collections that drive the site's dynamic pages.</p>
+        <div class="grid grid-3">
+          <div class="card benefit-card"><h3 style="font-size:16px;">Services</h3><p style="font-size:13.5px;">15 published</p></div>
+          <div class="card benefit-card"><h3 style="font-size:16px;">Subjects</h3><p style="font-size:13.5px;">16 published</p></div>
+          <div class="card benefit-card"><h3 style="font-size:16px;">Locations</h3><p style="font-size:13.5px;">4 published</p></div>
+          <div class="card benefit-card"><h3 style="font-size:16px;">Samples</h3><p style="font-size:13.5px;">4 published</p></div>
+          <div class="card benefit-card"><h3 style="font-size:16px;">Articles</h3><p style="font-size:13.5px;">4 published</p></div>
+          <div class="card benefit-card"><h3 style="font-size:16px;">FAQs</h3><p style="font-size:13.5px;">18 published</p></div>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div class="dash-tab-panel" data-panel-id="a-settings">
+        <h1 style="font-size:26px;">Site Settings</h1>
+        <div class="card" style="padding:26px;max-width:520px;">
+          <div class="wizard-field" style="margin-bottom:16px;"><label>Support Email</label><input type="email" value="acadamnofficial@gmail.com"></div>
+          <div class="wizard-field" style="margin-bottom:16px;"><label>WhatsApp Number</label><input type="text" value="+880 1880-526417"></div>
+          <div class="wizard-field" style="margin-bottom:16px;"><label>Facebook Page URL</label><input type="text" value="https://web.facebook.com/profile.php?id=61573521184414"></div>
+          <div class="wizard-field" style="margin-bottom:20px;"><label>Promo Bar Message</label><input type="text" value="New student? Get 10% off your first project with AcaDAMN"></div>
+          <button class="btn btn-primary" disabled>Save Settings (Demo)</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <span>© <span data-year>2026</span> AcaDAMN. Internal admin prototype.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

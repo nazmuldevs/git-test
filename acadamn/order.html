@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Your Order | AcaDAMN</title>
+<meta name="description" content="Send your requirements to AcaDAMN in a few guided steps and get a full quote before you confirm.">
+<link rel="canonical" href="https://acadamn.com/order.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;750;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="demo-banner"><strong>Prototype:</strong> this order flow is a front-end demo. No real order is placed and no payment is processed.</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="AcaDAMN home"><img src="assets/logo.svg" alt="AcaDAMN — We Write, You Succeed"></a>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="index.html#subjects" class="nav-link">Subjects</a></li>
+        <li class="nav-item"><a href="index.html#experts" class="nav-link">Experts</a></li>
+        <li class="nav-item"><a href="index.html#resources" class="nav-link">Resources</a></li>
+        <li class="nav-item"><a href="index.html#tools" class="nav-link">Tools</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      <button class="icon-btn nav-toggle" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer-head">
+    <img src="assets/logo.svg" alt="AcaDAMN" style="height:34px">
+    <button class="icon-btn mobile-drawer-close" aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <nav>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="cta-row"><a href="login.html" class="btn btn-secondary btn-block">Sign In</a></div>
+  </nav>
+</div>
+
+<main>
+<div class="container breadcrumbs"><a href="index.html">Home</a> / Start Your Order</div>
+
+<section class="section bg-white">
+  <div class="container wizard-shell" id="orderWizard">
+    <div class="section-head left" style="margin-bottom:8px;">
+      <span class="eyebrow">Order</span>
+      <h1 style="font-size:34px;">Tell us what you need</h1>
+      <p>A few short steps — you'll see your full quote before you confirm anything.</p>
+    </div>
+
+    <div class="wizard-progress" aria-hidden="true">
+      <div class="dot current"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+
+    <!-- Step 1: Service -->
+    <div class="wizard-panel active">
+      <div class="wizard-step-label">Step 1 of 8 — Service</div>
+      <h2>What kind of support do you need?</h2>
+      <div class="wizard-field-grid">
+        <div class="wizard-field">
+          <label for="w-service">Service Type</label>
+          <select id="w-service">
+            <option value="assignment">Assignment</option>
+            <option value="essay">Essay</option>
+            <option value="dissertation">Dissertation</option>
+            <option value="coursework">Coursework</option>
+            <option value="research">Research</option>
+            <option value="editing">Editing &amp; Proofreading</option>
+          </select>
+        </div>
+        <div class="wizard-field">
+          <label for="w-doctype">Document Type</label>
+          <select id="w-doctype">
+            <option>Essay</option>
+            <option>Report</option>
+            <option>Case Study</option>
+            <option>Reflective Journal</option>
+            <option>Literature Review</option>
+            <option>Presentation</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="wizard-nav-row"><span></span><button type="button" class="btn btn-primary" data-next>Continue</button></div>
+    </div>
+
+    <!-- Step 2: Academic Details -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 2 of 8 — Academic Details</div>
+      <h2>A bit about your course</h2>
+      <div class="wizard-field-grid">
+        <div class="wizard-field">
+          <label for="w-level">Academic Level</label>
+          <select id="w-level">
+            <option value="undergraduate">Undergraduate</option>
+            <option value="masters">Master's</option>
+            <option value="phd">PhD</option>
+          </select>
+        </div>
+        <div class="wizard-field">
+          <label for="w-subject">Subject</label>
+          <select id="w-subject">
+            <option>Business &amp; Management</option>
+            <option>Law</option>
+            <option>Nursing &amp; Healthcare</option>
+            <option>Psychology</option>
+            <option>Computer Science</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="wizard-field">
+          <label for="w-course">Course / Module</label>
+          <input id="w-course" type="text" placeholder="e.g. Strategic Marketing">
+        </div>
+        <div class="wizard-field">
+          <label for="w-citation">Citation Style</label>
+          <select id="w-citation">
+            <option>Harvard</option>
+            <option>APA</option>
+            <option>OSCOLA</option>
+            <option>Vancouver</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="wizard-field" style="grid-column:1/-1;">
+          <label for="w-topic">Assignment Topic / Title</label>
+          <input id="w-topic" type="text" placeholder="Paste your title or leave blank if undecided">
+        </div>
+      </div>
+      <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div>
+    </div>
+
+    <!-- Step 3: Requirements -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 3 of 8 — Requirements</div>
+      <h2>Your requirements</h2>
+      <div class="wizard-field-grid">
+        <div class="wizard-field">
+          <label for="w-words">Word Count</label>
+          <input id="w-words" type="number" value="2000" min="250" step="250">
+        </div>
+        <div class="wizard-field">
+          <label for="w-deadline">Deadline</label>
+          <select id="w-deadline">
+            <option value="standard">2+ weeks</option>
+            <option value="week">1 week</option>
+            <option value="urgent">Urgent (48–72h)</option>
+          </select>
+        </div>
+        <div class="wizard-field">
+          <label for="w-sources">Number of Sources</label>
+          <input id="w-sources" type="number" value="8" min="0">
+        </div>
+        <div class="wizard-field">
+          <label for="w-file">Upload Files (brief, rubric, reading list)</label>
+          <input id="w-file" type="file" multiple>
+        </div>
+        <div class="wizard-field full" style="grid-column:1/-1;">
+          <label for="w-instructions">Instructions</label>
+          <textarea id="w-instructions" rows="4" placeholder="Anything your specialist should know — marking rubric focus, structure preferences, specific sources to use, etc."></textarea>
+        </div>
+      </div>
+      <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div>
+    </div>
+
+    <!-- Step 4: Support Level -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 4 of 8 — Support Level</div>
+      <h2>Choose your support level</h2>
+      <div class="plan-select-grid">
+        <label class="plan-select-card selected" data-plan="essential">
+          <input type="radio" name="plan" value="essential" checked>
+          <h3>Essential</h3>
+          <div class="price">£16<small style="font-size:13px;font-weight:600;"> /250w</small></div>
+          <p style="font-size:13.5px;margin:0;">1 quality review pass, 1 revision request.</p>
+        </label>
+        <label class="plan-select-card" data-plan="plus">
+          <input type="radio" name="plan" value="plus">
+          <span class="badge-gold" style="margin-bottom:8px;display:inline-block;">Most Popular</span>
+          <h3>Plus</h3>
+          <div class="price">£19<small style="font-size:13px;font-weight:600;"> /250w</small></div>
+          <p style="font-size:13.5px;margin:0;">2 quality review passes, direct messaging.</p>
+        </label>
+        <label class="plan-select-card" data-plan="advanced">
+          <input type="radio" name="plan" value="advanced">
+          <h3>Advanced</h3>
+          <div class="price">£24<small style="font-size:13px;font-weight:600;"> /250w</small></div>
+          <p style="font-size:13.5px;margin:0;">Priority matching, unlimited revisions*.</p>
+        </label>
+      </div>
+      <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div>
+    </div>
+
+    <!-- Step 5: Extras -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 5 of 8 — Extras</div>
+      <h2>Add any extras</h2>
+      <div class="extras-list">
+        <div class="extra-row"><label><input type="checkbox" value="priority" data-label="Priority delivery"> Priority delivery</label><span class="extra-price">+£25</span></div>
+        <div class="extra-row"><label><input type="checkbox" value="originality" data-label="Detailed originality report"> Detailed originality report</label><span class="extra-price">+£12</span></div>
+        <div class="extra-row"><label><input type="checkbox" value="editing" data-label="Additional editing pass"> Additional editing pass</label><span class="extra-price">+£15</span></div>
+        <div class="extra-row"><label><input type="checkbox" value="slides" data-label="Presentation slides"> Presentation slides</label><span class="extra-price">+£20</span></div>
+        <div class="extra-row"><label><input type="checkbox" value="sources" data-label="Additional references/sources"> Additional references/sources</label><span class="extra-price">+£10</span></div>
+      </div>
+      <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>See My Quote</button></div>
+    </div>
+
+    <!-- Step 6: Quote -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 6 of 8 — Your Quote</div>
+      <h2>Here's your quote</h2>
+      <div class="quote-summary-card">
+        <div class="quote-summary-row"><span>Support level</span><strong id="sum-plan">Essential</strong></div>
+        <div class="quote-summary-row"><span>Base price</span><strong id="sum-base">£0</strong></div>
+        <div class="quote-summary-row"><span>Extras</span><strong id="sum-extras">None selected</strong></div>
+        <div class="quote-summary-row"><span>Reference</span><strong id="sum-ref"></strong></div>
+        <div class="quote-summary-row total"><span>Total</span><strong id="sum-total">£0</strong></div>
+      </div>
+      <div class="wizard-field" style="max-width:320px;">
+        <label for="w-promo">Promo code (optional)</label>
+        <input id="w-promo" type="text" placeholder="e.g. NEW10">
+      </div>
+      <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div>
+    </div>
+
+    <!-- Step 7: Customer Details -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 7 of 8 — Your Details</div>
+      <h2>Your details</h2>
+      <div class="wizard-field-grid">
+        <div class="wizard-field"><label for="w-name">Full Name</label><input id="w-name" type="text"></div>
+        <div class="wizard-field"><label for="w-email">Email</label><input id="w-email" type="email"></div>
+        <div class="wizard-field"><label for="w-phone">Phone</label><input id="w-phone" type="tel"></div>
+        <div class="wizard-field"><label for="w-password">Create Password</label><input id="w-password" type="password"></div>
+      </div>
+      <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="button" class="btn btn-primary" data-next>Continue to Payment</button></div>
+    </div>
+
+    <!-- Step 8: Payment -->
+    <div class="wizard-panel">
+      <div class="wizard-step-label">Step 8 of 8 — Payment</div>
+      <div id="paymentStepInner">
+        <h2>Payment</h2>
+        <p class="text-muted" style="max-width:520px;">This is a prototype checkout. Card details below are not sent anywhere and no real payment is taken — this step only demonstrates the flow. A live site would integrate a PCI-compliant provider such as Stripe here.</p>
+        <form id="paymentForm">
+          <div class="wizard-field-grid">
+            <div class="wizard-field" style="grid-column:1/-1;"><label for="w-card">Card Number (demo)</label><input id="w-card" type="text" placeholder="4242 4242 4242 4242" inputmode="numeric"></div>
+            <div class="wizard-field"><label for="w-exp">Expiry (demo)</label><input id="w-exp" type="text" placeholder="MM/YY"></div>
+            <div class="wizard-field"><label for="w-cvc">CVC (demo)</label><input id="w-cvc" type="text" placeholder="123" inputmode="numeric"></div>
+          </div>
+          <div class="wizard-nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button><button type="submit" class="btn btn-primary">Pay Now (Demo)</button></div>
+        </form>
+      </div>
+      <div class="confirmation-box card" id="confirmationPanel" hidden>
+        <div class="check-circle"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2>Order placed (demo)</h2>
+        <p>This confirms the prototype flow only — no real order has been created. Reference: <strong id="sum-ref-2"></strong></p>
+        <div class="btn-row" style="display:flex;justify-content:center;gap:14px;margin-top:20px;">
+          <a href="dashboard.html" class="btn btn-primary">View in Dashboard (Demo)</a>
+          <a href="index.html" class="btn btn-secondary">Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-box"><img src="assets/logo.svg" alt="AcaDAMN"></div>
+        <p style="color:rgba(255,255,255,.7);font-size:14px;max-width:260px;">Academic support for UK students — subject specialists, free tools and honest guidance.</p>
+        <p style="color:rgba(255,255,255,.5);font-size:13px;margin-top:8px;">Acadamn.com</p>
+      </div>
+      <div><h4>Services</h4><ul><li><a href="services.html#assignment-help">Assignment Help</a></li><li><a href="services.html#essay-guidance">Essay Support</a></li><li><a href="services.html#dissertation-support">Dissertation Support</a></li><li><a href="services.html">Editing &amp; Proofreading</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="index.html#resources">Free Samples</a></li><li><a href="index.html#tools">Student Tools</a></li><li><a href="faq.html">FAQ</a></li><li><a href="index.html#subjects">Subjects</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li><li><a href="academic-integrity.html">Academic Integrity</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="mailto:acadamnofficial@gmail.com">Email Support</a></li><li><a href="https://wa.me/8801880526417" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="https://web.facebook.com/profile.php?id=61573521184414" target="_blank" rel="noopener">Facebook</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> AcaDAMN. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="academic-integrity.html">Academic Integrity</a>
+        <a href="contact.html">Privacy Policy</a>
+        <a href="contact.html">Terms &amp; Conditions</a>
+        <a href="contact.html">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="floating-support">
+  <div class="floating-support-panel">
+    <a href="https://wa.me/8801880526417" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-9 8.35A8.5 8.5 0 013 12a8.5 8.5 0 018.5-8.5A8.38 8.38 0 0121 11.5z"/></svg>WhatsApp</a>
+    <a href="https://web.facebook.com/profile.php?id=61573521184414" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 3h-3a4 4 0 00-4 4v3H8v4h3v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>Facebook</a>
+    <a href="mailto:acadamnofficial@gmail.com"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>Email Us</a>
+  </div>
+  <button class="floating-toggle" aria-label="Open support options"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

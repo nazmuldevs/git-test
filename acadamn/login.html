@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In | AcaDAMN</title>
+<meta name="description" content="Sign in to your AcaDAMN account or create a new one.">
+<link rel="canonical" href="https://acadamn.com/login.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;750;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="demo-banner"><strong>Prototype:</strong> this sign-in screen is a front-end demo. No real account is created or verified.</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="AcaDAMN home"><img src="assets/logo.svg" alt="AcaDAMN — We Write, You Succeed"></a>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="order.html" class="btn btn-primary btn-sm">Get a Quote</a>
+      <button class="icon-btn nav-toggle" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer-head">
+    <img src="assets/logo.svg" alt="AcaDAMN" style="height:34px">
+    <button class="icon-btn mobile-drawer-close" aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <nav>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="cta-row"><a href="order.html" class="btn btn-primary btn-block">Get a Quote</a></div>
+  </nav>
+</div>
+
+<main>
+<section class="section bg-tint" style="min-height:70vh;display:flex;align-items:center;">
+  <div class="container auth-shell">
+    <div class="card" style="padding:36px;" data-tabgroup="auth">
+      <div class="center" style="margin-bottom:24px;">
+        <img src="assets/logo.svg" alt="AcaDAMN" style="height:38px;margin:0 auto 18px;">
+        <h1 style="font-size:24px;margin-bottom:4px;">Welcome back</h1>
+        <p style="font-size:14px;margin:0;">Sign in or create an account to track your orders.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" data-tabtrigger="auth" data-target="signin">Sign In</button>
+        <button class="auth-tab-btn" data-tabtrigger="auth" data-target="signup">Create Account</button>
+      </div>
+
+      <div class="auth-panel active" data-panel-id="signin">
+        <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+          <div class="wizard-field" style="margin-bottom:16px;"><label for="li-email">Email</label><input id="li-email" type="email" required></div>
+          <div class="wizard-field" style="margin-bottom:20px;"><label for="li-pass">Password</label><input id="li-pass" type="password" required></div>
+          <button type="submit" class="btn btn-primary btn-block">Sign In (Demo)</button>
+        </form>
+      </div>
+
+      <div class="auth-panel" data-panel-id="signup">
+        <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+          <div class="wizard-field" style="margin-bottom:16px;"><label for="su-name">Full Name</label><input id="su-name" type="text" required></div>
+          <div class="wizard-field" style="margin-bottom:16px;"><label for="su-email">Email</label><input id="su-email" type="email" required></div>
+          <div class="wizard-field" style="margin-bottom:20px;"><label for="su-pass">Password</label><input id="su-pass" type="password" required></div>
+          <button type="submit" class="btn btn-primary btn-block">Create Account (Demo)</button>
+        </form>
+      </div>
+
+      <p class="text-muted center" style="font-size:12.5px;margin-top:24px;">This is a prototype — no credentials are stored or verified.</p>
+    </div>
+    <p class="center text-muted" style="font-size:13px;margin-top:18px;">Internal preview: <a href="admin.html" style="color:var(--blue-primary);font-weight:700;">Admin dashboard prototype</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <span>© <span data-year>2026</span> AcaDAMN. All rights reserved. — Acadamn.com</span>
+      <div class="footer-legal">
+        <a href="mailto:acadamnofficial@gmail.com">Email</a>
+        <a href="https://wa.me/8801880526417" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://web.facebook.com/profile.php?id=61573521184414" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

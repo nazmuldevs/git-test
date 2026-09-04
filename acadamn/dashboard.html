@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Dashboard | AcaDAMN</title>
+<meta name="description" content="Track your orders, messages, files and payments with AcaDAMN.">
+<link rel="canonical" href="https://acadamn.com/dashboard.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;750;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="demo-banner"><strong>Prototype:</strong> this customer dashboard shows sample data only. It is not connected to a real account or database.</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="AcaDAMN home"><img src="assets/logo.svg" alt="AcaDAMN — We Write, You Succeed"></a>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="order.html" class="btn btn-primary btn-sm">New Order</a>
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign Out</a>
+      <button class="icon-btn nav-toggle" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" aria-hidden="true">
+  <div class="mobile-drawer-head">
+    <img src="assets/logo.svg" alt="AcaDAMN" style="height:34px">
+    <button class="icon-btn mobile-drawer-close" aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <nav>
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="cta-row"><a href="order.html" class="btn btn-primary btn-block">New Order</a></div>
+  </nav>
+</div>
+
+<main>
+<section class="section bg-white" style="padding-top:40px;">
+  <div class="container dash-shell" data-tabgroup="dash">
+
+    <aside class="dash-sidebar">
+      <a href="#" class="active" data-tabtrigger="dash" data-target="overview"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</a>
+      <a href="#" data-tabtrigger="dash" data-target="orders"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>Orders</a>
+      <a href="#" data-tabtrigger="dash" data-target="messages"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Messages</a>
+      <a href="#" data-tabtrigger="dash" data-target="files"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Files</a>
+      <a href="#" data-tabtrigger="dash" data-target="payments"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Payments</a>
+      <a href="#" data-tabtrigger="dash" data-target="revisions"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Revisions</a>
+      <a href="#" data-tabtrigger="dash" data-target="profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>Profile</a>
+    </aside>
+
+    <div>
+      <!-- Overview -->
+      <div class="dash-tab-panel active" data-panel-id="overview">
+        <h1 style="font-size:26px;">Welcome back, Alex</h1>
+        <p style="margin-bottom:24px;">Here's what's happening with your projects.</p>
+        <div class="dash-stat-row">
+          <div class="card dash-stat-card"><div class="num">2</div><div class="cap">Active orders</div></div>
+          <div class="card dash-stat-card"><div class="num">1</div><div class="cap">Awaiting your review</div></div>
+          <div class="card dash-stat-card"><div class="num">5</div><div class="cap">Completed orders</div></div>
+        </div>
+        <div class="card" style="padding:22px;">
+          <h3 style="margin-top:0;">Next deadline</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Order</th><th>Service</th><th>Deadline</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>AD-482913</td><td>Dissertation — Literature Review</td><td>12 Sep 2026</td><td><span class="status-pill in-progress">In Progress</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders -->
+      <div class="dash-tab-panel" data-panel-id="orders">
+        <h1 style="font-size:26px;">Your orders</h1>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Reference</th><th>Service</th><th>Subject</th><th>Deadline</th><th>Status</th><th>Price</th></tr></thead>
+              <tbody>
+                <tr><td>AD-482913</td><td>Dissertation</td><td>Business</td><td>12 Sep 2026</td><td><span class="status-pill in-progress">In Progress</span></td><td>£420</td></tr>
+                <tr><td>AD-471820</td><td>Essay</td><td>Psychology</td><td>03 Sep 2026</td><td><span class="status-pill review">Awaiting Review</span></td><td>£95</td></tr>
+                <tr><td>AD-460221</td><td>Assignment</td><td>Law</td><td>18 Aug 2026</td><td><span class="status-pill complete">Completed</span></td><td>£140</td></tr>
+                <tr><td>AD-455130</td><td>Editing</td><td>Nursing</td><td>02 Aug 2026</td><td><span class="status-pill complete">Completed</span></td><td>£60</td></tr>
+                <tr><td>AD-449902</td><td>Coursework</td><td>Computer Science</td><td>21 Jul 2026</td><td><span class="status-pill complete">Completed</span></td><td>£210</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="dash-tab-panel" data-panel-id="messages">
+        <h1 style="font-size:26px;">Messages</h1>
+        <div class="message-thread">
+          <div class="from">Dr. A. Whitfield — Order AD-482913</div>
+          <div class="msg-meta">2 days ago</div>
+          <p style="margin:0;">Hi Alex, I've drafted the literature review structure — could you confirm the two extra sources you mentioned before I continue?</p>
+        </div>
+        <div class="message-thread">
+          <div class="from">AcaDAMN Support — Order AD-471820</div>
+          <div class="msg-meta">5 days ago</div>
+          <p style="margin:0;">Your essay has been delivered and is ready for review in the Files tab.</p>
+        </div>
+      </div>
+
+      <!-- Files -->
+      <div class="dash-tab-panel" data-panel-id="files">
+        <h1 style="font-size:26px;">Files</h1>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>File</th><th>Order</th><th>Uploaded</th><th></th></tr></thead>
+              <tbody>
+                <tr><td>Marking_Rubric.pdf</td><td>AD-482913</td><td>You uploaded — 10 Sep 2026</td><td><button class="btn btn-secondary btn-sm" disabled>Download (Demo)</button></td></tr>
+                <tr><td>Essay_Draft_v1.docx</td><td>AD-471820</td><td>Delivered — 29 Aug 2026</td><td><button class="btn btn-secondary btn-sm" disabled>Download (Demo)</button></td></tr>
+                <tr><td>Assignment_Final.docx</td><td>AD-460221</td><td>Delivered — 17 Aug 2026</td><td><button class="btn btn-secondary btn-sm" disabled>Download (Demo)</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payments -->
+      <div class="dash-tab-panel" data-panel-id="payments">
+        <h1 style="font-size:26px;">Payments</h1>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Invoice</th><th>Order</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>INV-10432</td><td>AD-482913</td><td>05 Sep 2026</td><td>£420</td><td><span class="status-pill paid">Paid</span></td></tr>
+                <tr><td>INV-10399</td><td>AD-471820</td><td>28 Aug 2026</td><td>£95</td><td><span class="status-pill paid">Paid</span></td></tr>
+                <tr><td>INV-10355</td><td>AD-460221</td><td>10 Aug 2026</td><td>£140</td><td><span class="status-pill paid">Paid</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revisions -->
+      <div class="dash-tab-panel" data-panel-id="revisions">
+        <h1 style="font-size:26px;">Revisions</h1>
+        <div class="card" style="padding:22px;margin-bottom:18px;">
+          <h3 style="margin-top:0;">Request a revision</h3>
+          <p style="font-size:14px;">Revisions are available within your service window — see our Revision Policy for details.</p>
+          <button class="btn btn-primary" disabled>Request Revision (Demo)</button>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Order</th><th>Requested</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>AD-460221</td><td>15 Aug 2026</td><td><span class="status-pill complete">Completed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Profile -->
+      <div class="dash-tab-panel" data-panel-id="profile">
+        <h1 style="font-size:26px;">Profile</h1>
+        <div class="card" style="padding:26px;max-width:480px;">
+          <div class="wizard-field" style="margin-bottom:16px;"><label>Full Name</label><input type="text" value="Alex Morgan"></div>
+          <div class="wizard-field" style="margin-bottom:16px;"><label>Email</label><input type="email" value="alex.morgan@example.com"></div>
+          <div class="wizard-field" style="margin-bottom:20px;"><label>Phone</label><input type="tel" value="+44 7000 000000"></div>
+          <button class="btn btn-primary" disabled>Save Changes (Demo)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <span>© <span data-year>2026</span> AcaDAMN. All rights reserved. — Acadamn.com</span>
+      <div class="footer-legal">
+        <a href="mailto:acadamnofficial@gmail.com">Email</a>
+        <a href="https://wa.me/8801880526417" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://web.facebook.com/profile.php?id=61573521184414" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

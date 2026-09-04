@@ -108,9 +108,140 @@
       if (priceOut) priceOut.textContent = '£' + estimate.toLocaleString();
     }
     quoteForm.addEventListener('change', calculate);
-    quoteForm.addEventListener('submit', function (e) { e.preventDefault(); calculate(); });
+    quoteForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      calculate();
+      var params = new URLSearchParams({
+        service: quoteForm.service.value,
+        level: quoteForm.level.value,
+        subject: quoteForm.subject.value,
+        words: quoteForm.words.value,
+        deadline: quoteForm.deadline.value
+      });
+      window.location.href = 'order.html?' + params.toString();
+    });
     calculate();
   }
+
+  /* ---------- Order wizard (prototype — no real backend/payment) ---------- */
+  var wizard = document.getElementById('orderWizard');
+  if (wizard) {
+    var steps = Array.prototype.slice.call(wizard.querySelectorAll('.wizard-panel'));
+    var dots = Array.prototype.slice.call(wizard.querySelectorAll('.wizard-progress .dot'));
+    var current = 0;
+
+    function showStep(i) {
+      steps.forEach(function (s, idx) { s.classList.toggle('active', idx === i); });
+      dots.forEach(function (d, idx) {
+        d.classList.toggle('current', idx === i);
+        d.classList.toggle('done', idx < i);
+      });
+      window.scrollTo({ top: wizard.offsetTop - 100, behavior: 'smooth' });
+      fillSummary();
+      current = i;
+    }
+
+    wizard.querySelectorAll('[data-next]').forEach(function (btn) {
+      btn.addEventListener('click', function () { if (current < steps.length - 1) showStep(current + 1); });
+    });
+    wizard.querySelectorAll('[data-back]').forEach(function (btn) {
+      btn.addEventListener('click', function () { if (current > 0) showStep(current - 1); });
+    });
+
+    // Plan select cards
+    wizard.querySelectorAll('.plan-select-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        wizard.querySelectorAll('.plan-select-card').forEach(function (c) { c.classList.remove('selected'); });
+        card.classList.add('selected');
+        card.querySelector('input').checked = true;
+        fillSummary();
+      });
+    });
+
+    wizard.addEventListener('change', function () { fillSummary(); });
+
+    // Prefill from query string (from homepage/pricing calculator)
+    var qs = new URLSearchParams(window.location.search);
+    var fieldMap = { service: 'w-service', level: 'w-level', subject: 'w-subject', words: 'w-words', deadline: 'w-deadline' };
+    Object.keys(fieldMap).forEach(function (key) {
+      var val = qs.get(key);
+      var el = document.getElementById(fieldMap[key]);
+      if (val && el) el.value = val;
+    });
+    var plan = qs.get('plan');
+    if (plan) {
+      var planCard = wizard.querySelector('.plan-select-card[data-plan="' + plan + '"]');
+      if (planCard) planCard.click();
+    }
+
+    var extraRates = { priority: 25, originality: 12, editing: 15, slides: 20, sources: 10 };
+    var planRates = { essential: 16, plus: 19, advanced: 24 };
+    var baseRates2 = { assignment: 16, essay: 15, dissertation: 22, coursework: 17, research: 20, editing: 9 };
+    var levelMultiplier2 = { undergraduate: 1, masters: 1.25, phd: 1.6 };
+    var deadlineMultiplier2 = { standard: 1, week: 1.2, urgent: 1.5 };
+
+    function computeTotal() {
+      var words = parseInt(document.getElementById('w-words').value, 10) || 1000;
+      var service = document.getElementById('w-service').value;
+      var level = document.getElementById('w-level').value;
+      var deadline = document.getElementById('w-deadline').value;
+      var selectedPlan = wizard.querySelector('.plan-select-card.selected');
+      var planKey = selectedPlan ? selectedPlan.getAttribute('data-plan') : 'essential';
+      var rate = planRates[planKey] || baseRates2[service] || 16;
+      var lvl = levelMultiplier2[level] || 1;
+      var dl = deadlineMultiplier2[deadline] || 1;
+      var base = Math.round(((words / 250) * rate * lvl * dl));
+      var extrasTotal = 0;
+      var extrasSelected = [];
+      wizard.querySelectorAll('.extra-row input[type="checkbox"]:checked').forEach(function (cb) {
+        var key = cb.value;
+        extrasTotal += extraRates[key] || 0;
+        extrasSelected.push(cb.getAttribute('data-label'));
+      });
+      return { base: base, extrasTotal: extrasTotal, extrasSelected: extrasSelected, total: base + extrasTotal, planKey: planKey };
+    }
+
+    function fillSummary() {
+      var r = computeTotal();
+      var setText = function (id, text) { var el = document.getElementById(id); if (el) el.textContent = text; };
+      setText('sum-plan', r.planKey.charAt(0).toUpperCase() + r.planKey.slice(1));
+      setText('sum-base', '£' + r.base);
+      setText('sum-extras', r.extrasSelected.length ? r.extrasSelected.join(', ') + ' (+£' + r.extrasTotal + ')' : 'None selected');
+      setText('sum-total', '£' + r.total);
+      var ref = document.getElementById('sum-ref');
+      if (ref && !ref.textContent) ref.textContent = 'AD-' + Math.floor(100000 + Math.random() * 899999);
+    }
+
+    fillSummary();
+
+    var payForm = document.getElementById('paymentForm');
+    if (payForm) {
+      payForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var ref = document.getElementById('sum-ref');
+        var ref2 = document.getElementById('sum-ref-2');
+        if (ref2 && ref) ref2.textContent = ref.textContent;
+        document.getElementById('paymentStepInner').hidden = true;
+        document.getElementById('confirmationPanel').hidden = false;
+      });
+    }
+  }
+
+  /* ---------- Generic tabbed panels (dashboard / admin sidebars, auth tabs) ---------- */
+  document.querySelectorAll('[data-tabgroup]').forEach(function (group) {
+    var groupName = group.getAttribute('data-tabgroup');
+    var triggers = document.querySelectorAll('[data-tabtrigger="' + groupName + '"]');
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        var target = trigger.getAttribute('data-target');
+        triggers.forEach(function (t) { t.classList.toggle('active', t === trigger); });
+        group.querySelectorAll('[data-panel-id]').forEach(function (panel) {
+          panel.classList.toggle('active', panel.getAttribute('data-panel-id') === target);
+        });
+      });
+    });
+  });
 
   /* ---------- FAQ search filter (faq page) ---------- */
   var faqSearch = document.getElementById('faqSearch');
