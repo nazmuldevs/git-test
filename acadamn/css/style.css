@@ -176,7 +176,7 @@ p { margin: 0 0 1em; color: var(--text-muted); }
   border-bottom: 1px solid var(--border);
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 14px 24px; }
-.brand img { height: 42px; width: auto; }
+.brand img { height: 56px; width: auto; }
 .main-nav { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; }
 .main-nav > ul { display: flex; gap: 4px; }
 .main-nav a.nav-link {
@@ -417,8 +417,8 @@ table.compare th { background: var(--blue-pale); font-weight: 700; }
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-deep); color: rgba(255,255,255,.82); padding: 72px 0 32px; }
 .footer-top { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: 32px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.14); }
-.footer-brand-box { background: rgba(255,255,255,.06); border-radius: var(--radius-md); padding: 18px; display: inline-block; margin-bottom: 16px; }
-.footer-brand-box img { height: 34px; }
+.footer-brand-box { background: var(--white); border-radius: var(--radius-md); padding: 16px 20px; display: inline-block; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.footer-brand-box img { height: 44px; display: block; }
 .site-footer h4 { color: var(--white); font-size: 14px; margin-bottom: 16px; }
 .site-footer ul li { margin-bottom: 10px; }
 .site-footer a { color: rgba(255,255,255,.75); font-size: 14px; }
