@@ -255,9 +255,30 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 .highlight-mark.draw path { animation: drawHighlight 1s cubic-bezier(.3,.8,.3,1) .5s forwards; }
 @keyframes drawHighlight { to { stroke-dashoffset: 0; } }
 
+/* Discount badge under the quote estimate */
+.discount-badge {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 16px; font-weight: 800; letter-spacing: -0.01em; color: #7A5F00;
+  background: linear-gradient(100deg, var(--gold-pale) 0%, #FFFDF3 45%, #FFF1B8 55%, var(--gold-pale) 100%);
+  background-size: 220% 100%;
+  border: 1px solid #F0DFA0;
+  border-radius: var(--radius-pill);
+  padding: 11px 16px;
+  margin: 0 0 10px;
+  box-shadow: 0 0 0 0 rgba(232, 201, 79, .45);
+  animation: discountShimmer 3.2s linear infinite, discountPulse 2.4s ease-in-out infinite;
+}
+.discount-badge svg { flex-shrink: 0; }
+@keyframes discountShimmer { 0% { background-position: 220% 0; } 100% { background-position: -20% 0; } }
+@keyframes discountPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 201, 79, .45); }
+  50% { box-shadow: 0 0 0 7px rgba(232, 201, 79, 0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cycle-word-inner.cycle-out, .cycle-word-inner.cycle-in { animation: none; }
   .highlight-mark.draw path { animation: none; stroke-dashoffset: 0; }
+  .discount-badge { animation: none; }
 }
 
 /* Quote calculator card */
